@@ -1,0 +1,4 @@
+# Requirements for the project
+
+vulners
+python-nmap
