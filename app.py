@@ -1,175 +1,71 @@
+import assets.app_engine as engine
+import streamlit as st
+import re
 import os
-import argparse
-import vulners
-import nmap
-
-def initialize():
-    # Create a directory called 'runtime' in the current directory with error control
-    try:
-        runtime_dir = os.path.join(os.getcwd(), 'runtime')
-        os.makedirs(runtime_dir, exist_ok=True)
-        print(f"Directory 'runtime' created at {runtime_dir}")
-    except Exception as e:
-        print(f"An error occurred while creating the 'runtime' directory: {e}")
-    
-def args_setup():
-    parser = argparse.ArgumentParser(description="Octaprobe Command Line Tool")
-    parser.add_argument("mode", choices=["discover", "basic", "advanced"],
-                        help="Mode of operation")
-    parser.add_argument("--service", type=str, help="Specific service to scan (for advanced modes)")
-    parser.add_argument("--project", type=str, required=True, help="Project name for organizing scan results (mandatory)")
-    parser.add_argument("--target", type=str, required=True, help="Target IP or range for scanning (mandatory)")
-
-    return parser.parse_args()
-
-def create_subdirectory(args, folder_name):
-        try:
-            runtime_dir = os.path.join(os.getcwd(), 'runtime')
-            sub_dir = os.path.join(runtime_dir, folder_name)
-            os.makedirs(sub_dir, exist_ok=True)
-            print(f"Subdirectory '{folder_name}' created at {sub_dir}")
-            target_file = os.path.join(sub_dir, args.target + '.txt')
-            with open(target_file, 'w') as f:
-                f.write(f"Target: {args.target}\n")
-            print(f"File '{args.target}.txt' created in subdirectory '{folder_name}'")
-
-            return sub_dir
-        except Exception as e:
-            print(f"An error occurred while creating the subdirectory '{folder_name}': {e}")
-            return None
-
-class Scanner:
-    def __init__(self, target, project):
-        self.target = target
-        self.project = project
-
-    def discover(self):
-        print(f"Performing discovery scan on target: {self.target}")
-        nm = nmap.PortScanner()
-        try:
-            nm.scan(hosts=self.target, arguments='-sn')
-            sub_dir = create_subdirectory(argparse.Namespace(target=self.target, project=self.project), self.project)
-            if sub_dir:
-                result_file = os.path.join(sub_dir, 'discovery_results.txt')
-                with open(result_file, 'w') as f:
-                    for host in nm.all_hosts():
-                        f.write(f'Host: {host}\tState: {nm[host].state()}\n')
-                        print(f'Host: {host}\tState: {nm[host].state()}')
-                print(f"Discovery results saved to {result_file}")
-        except Exception as e:
-            print(f"An error occurred during the discovery scan: {e}")
-
-    def basic(self):
-        print(f"Performing basic scan on target: {self.target}")
-        nm = nmap.PortScanner()
-        try:
-            nm.scan(hosts=self.target, arguments='-sV')
-            sub_dir = create_subdirectory(argparse.Namespace(target=self.target, project=self.project), self.project)
-            if sub_dir:
-                result_file = os.path.join(sub_dir, 'basic_scan_results.txt')
-                with open(result_file, 'w') as f:
-                    for host in nm.all_hosts():
-                        f.write(f'Host: {host}\tState: {nm[host].state()}\n')
-                        print(f'Host: {host}\tState: {nm[host].state()}')
-                        for proto in nm[host].all_protocols():
-                            f.write(f'Protocol: {proto}\n')
-                            print(f'Protocol: {proto}')
-                            lport = nm[host][proto].keys()
-                            for port in lport:
-                                state = nm[host][proto][port]["state"]
-                                service = nm[host][proto][port].get("name", "unknown")
-                                # version = nm[host][proto][port].get("version", "unknown")
-                                cpe=nm[host][proto][port].get("cpe", "unknown")
-                                f.write(nm.csv())
-                                print(f'Port: {port}\tState: {state}\tService: {service}\tVersion: {cpe}')
-                                print(nm.csv())
-                print(f"Basic scan results saved to {result_file}")
-        except Exception as e:
-            print(f"An error occurred during the basic scan: {e}")
-
-    def advanced(self):
-        print(f"Performing advanced version probing scan on target: {self.target}")
-        nm = nmap.PortScanner()
-        try:
-            nm.scan(hosts=self.target, arguments='-sV')
-            for host in nm.all_hosts():
-                print(f'Host : {host}')
-            for proto in nm[host].all_protocols():
-                print(f'Protocol : {proto}')
-                lport = nm[host][proto].keys()
-                for port in lport:
-                    state = nm[host][proto][port]["state"]
-                    service = nm[host][proto][port].get("name", "unknown")
-                    version = nm[host][proto][port].get("version", "unknown")
-                    all = nm
-                    # print(f'Port: {port}\tState: {state}\tService: {service}\tVersion: {version}')
-                    print(nm.csv())
-        except Exception as e:
-            print(f"An error occurred during the advanced scan: {e}")
-
-
-    def __init__(self, target, project, service=None):
-        self.target = target
-        self.project = project
-        self.service = service
-
-def API_KEY_SETUP():
-    # Set the API Key
-    api_key = os.getenv('VULNERS_API_KEY')
-    if not api_key:
-        raise ValueError("No API key found. Please set the VULNERS_API_KEY environment variable.")
-    # print(api_key) # For Debug Purposes
-    return api_key
-
-def vulners_database(apiKey=None, args=None, filePath=None):
-    vulners_api = vulners.VulnersApi(apiKey)
-
-
-    project_dir = os.path.join(os.getcwd(), 'runtime', args.project)
-    basic_file_path = filePath
-
-    data = None
-    try:
-        with open(basic_file_path, 'r') as file:
-            data = file.read()
-            print(f"Data retrieved from {basic_file_path}")
-    except FileNotFoundError:
-        print(f"File {basic_file_path} not found.")
-    except Exception as e:
-        print(f"An error occurred while reading the file: {e}")
-
-    print(data)
-
-
-    # database_search_1 = vulners_api.find_all(
-    # "sometext", limit=2,  fields=["published", "title", "description", "cvelist"])
-
-    # print(database_search_1) # For Debug Purposes
-
+from assets.template import generate_basic_template
+from assets.template import generate_advanced_template
+from assets.app_engine import Scanner
 
 def main():
+    # Set the page configuration, and other workarounds
+    PAGES_DIR = engine.initialize()
 
-    initialize()
 
-    args = args_setup()
+    # Display the title, description and badges
+    st.title("Octaprobe")
+    st.header("Yet Another Vulnerability Scanner")
+    col1, col2, col3, col4 = st.columns(4)
+    col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("Streamlit", color="red")
+    st.sidebar.title("📁 Scan Projects")
+    
+
+    # Display the scan form
+    with st.form("scan_form", clear_on_submit=False):
+        ip = st.text_input("Enter Target IP Address", placeholder="e.g., 192.168.1.1")
+        scan_mode = st.radio(
+            "Select Scan Mode",
+         options=["Basic", "Advanced"],
+         index=0,
+         horizontal=True)         
+        submit = st.form_submit_button("🚀 Start Scan")
         
-    create_subdirectory(args, args.project)
+    # User input Sanitization
+    def is_valid_ip_or_domain(value):
+        ip_pattern = re.compile(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")
+        domain_pattern = re.compile(r"^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$")
+        return ip_pattern.match(value) or domain_pattern.match(value)
 
-    scanner = Scanner(args.target, args.project)
+    # Check if the form is submitted
+    if submit:
+        if not ip or not is_valid_ip_or_domain(ip):
+            st.warning("Please enter a valid IP address or domain name.")
+        else:
+            st.success(f"Scan initiated for `{ip}` using **{scan_mode}** mode.")
+            
 
-    # vulners_database(API_KEY_SETUP(), args, os.path.join(os.getcwd(), 'runtime', args.project, 'basic_scan_results.txt'))
+            # Placeholder: You can now call your scan function here
+            with st.spinner("Initializing scan..."):
+                try:
+                    scanner = Scanner(ip)
 
-    match args.mode:
-        case "discover":
-            scanner.discover()
-        case "basic":
-            scanner.basic()
-        case "advanced":
-            scanner.advanced()
-        case _:
-            print("Invalid mode selected")
+                    if scan_mode == "Basic":
+                        result = scanner.run_basic_scan()
+                        page_code = generate_basic_template(ip, result)
+                    elif scan_mode == "Advanced":
+                        result = scanner.run_advanced_scan()
+                        page_code = generate_advanced_template(ip, result)
 
+                    existing_files = [f for f in os.listdir(PAGES_DIR) if f.startswith("scan_") and f.endswith(".py")]
+                    index = 1
+                    while any(f.startswith(f"{index}_scan_") for f in existing_files):
+                        index += 1
+                    page_filename = f"{index}_scan_{ip.replace('.', '_')}.py"
+                    with open(os.path.join(PAGES_DIR, page_filename), "w") as f:
+                        f.write(page_code)
 
+                    st.success("Scan complete. Restart app to view new page.")
+                except Exception as e:
+                    st.error(f"Scan failed: {e}")
 
 
 if __name__ == "__main__":
