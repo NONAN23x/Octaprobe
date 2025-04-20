@@ -158,6 +158,7 @@ share
 pages
 assets/webapp_test.py
 pyvenv.cfg
+assets/data/
 
 # Coverlet is a free, cross platform Code Coverage Tool
 coverage*.json

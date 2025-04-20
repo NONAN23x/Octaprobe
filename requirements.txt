@@ -2,3 +2,4 @@
 
 vulners
 streamlit
+ollama
