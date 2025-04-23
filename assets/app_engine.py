@@ -51,8 +51,7 @@ class Scanner:
         discovered_endpoints = [] 
         print("Engine Breakpoint 0")
         if wordlist_path is None:
-            wordlist_path = os.path.join(os.path.dirname(__file__), "data", "wordlist.txt")
-            print(f"Using default wordlist: {wordlist_path}")
+            wordlist_path = os.path.join(os.path.dirname(__file__), "wordlists", "wordlist.txt")
 
         try:
             with open(wordlist_path, "r") as f:
@@ -62,7 +61,6 @@ class Scanner:
                         continue
                     target = url_base + path
                     try:
-                        print("Engine Breakpoint 1")
                         response = requests.get(target, headers=headers, timeout=3)
                         if response.status_code == 200:
                             discovered_endpoints.append(path)

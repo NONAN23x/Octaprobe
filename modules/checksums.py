@@ -68,7 +68,7 @@ def generate_checksums():
         return
     
     # Printing Metadata first
-    with st.expander("File Metadata"):
+    with st.expander("File Details"):
         file_details = metadata(uploaded_file)
         exif_data = get_exif_data(uploaded_file)
         st.write(file_details)

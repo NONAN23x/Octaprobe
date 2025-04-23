@@ -15,7 +15,13 @@ def main():
     st.header("Yet Another Vulnerability Scanner")
     col1, col2, col3, col4, col5 = st.columns(5)
     col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
-    st.sidebar.title("📁 Scan Projects")
+    
+    with st.sidebar:
+        st.title("📁 Scan Projects")
+        st.divider()
+        st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
+        st.link_button("View the source", url="https://github.com/NONAN23x/Octaprobe")
+
     
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
         ["**:desktop_computer: Dashboard**", 

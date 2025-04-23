@@ -2,19 +2,9 @@ import streamlit as st
 import os
 import time
 
+
 def settings():
-    st.subheader("Settings")
-    st.write("Configure your scan settings here.")
-
-    st.divider()
-    # File input for wordlist
-    wordlist = None
-    st.badge("⚙️ Optional")
-    st.write("You can upload a custom wordlist to use for the web scan. If you don't upload one, the default wordlist will be used.")
-    st.write("The default wordlist is located in the `assets/data/wordlist.txt` directory.")
-    uploaded_file = st.file_uploader("Upload a custom wordlist", type="txt", accept_multiple_files=False)
-        
-
+    st.write("Scan History")
     # Directory containing the pages
     pages_dir = os.path.join(os.getcwd(), "pages")
 
@@ -24,22 +14,22 @@ def settings():
     else:
         pages = []
 
-    st.divider()
     success_message = None
 
     if pages:
-        st.caption("📁 Previous Scans")
+        st.badge("📁 Previous Scans")
     else:
         st.caption("💡 No previous scans were found.")
 
     for page in pages:
         col1, col2 = st.columns([4, 1])
         with col1:
-            st.write(page)
+            st.write(os.path.splitext(page)[0])
         with col2:
             if st.button("Delete 🗑️", key=f"delete_{page}"):
                 os.remove(os.path.join(pages_dir, page))
                 success_message = f"Deleted {page}"
+                st.toast(f"Deleted {page}", icon="🟢")
                 time.sleep(0.5)
                 st.rerun()
 
@@ -69,6 +59,7 @@ def settings():
                     theme_contents = theme_file.read()
                 with open(streamlit_config_path, "w") as config_file:
                     config_file.write(theme_contents)
+                st.toast(f"Theme '{theme}' applied!", icon="🟢")
                 time.sleep(0.3)
                 st.rerun()
             else:

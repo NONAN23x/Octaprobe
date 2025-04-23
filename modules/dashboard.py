@@ -52,6 +52,7 @@ def dashboard():
                 
             elif not project_name or not is_valid_project_name(project_name):
                 st.warning("Please enter a valid project name.")
+                st.toast("Hey, no fuzz testing this app!!!", icon="🚫")
             
             else:
                 st.success(f"Scan initiated for `{ip}` using **{scan_mode}** mode.")
@@ -61,14 +62,16 @@ def dashboard():
                     try:
                         scanner = Scanner(ip) # OOPs !!!    
                         if scan_mode == "Basic":
+                            st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
                             result = scanner.run_basic_scan()
                             page_code = generate_basic_template(ip, result)
                         elif scan_mode == "Advanced":
+                            st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
                             scanner.run_advanced_scan()
                             page_code = generate_advanced_template(ip)
                         elif scan_mode == "Web":
-                            # wordlist = settings().wordlist
-                            host,endpoints = scanner.run_web_scan(settings.uploaded_file)
+                            st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
+                            host,endpoints = scanner.run_web_scan()
                             page_code = generate_web_template(host,endpoints)
                                                    
                         
@@ -79,6 +82,7 @@ def dashboard():
                         with open(os.path.join(PAGES_DIR, page_filename), "w") as f:
                             f.write(page_code)  
                         # Display a success message
+                        st.toast(f"{scan_mode} Scan completed successfully!", icon="✅")
                         st.success("Scan complete. Restarting app to view the new page.")
                         time.sleep(1)
                         st.rerun()

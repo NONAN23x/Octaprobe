@@ -10,7 +10,7 @@ except ImportError:
 def assistant():
 
     if ollamaNotFound:
-        st.error("Ollama is not installed. Please install it to use this feature.")
+        st.error("Ollama (module or service) is not installed. Please install it to use this feature.")
         return
     
     def chat_with_OctaBot(userInput: str):
@@ -23,8 +23,7 @@ def assistant():
         for chunk in response:
             yield chunk['message']['content']
 
-    # chat_with_gemma()
-    st.title("Octaprobe Assistant")
+    st.subheader("Chat with OctaBot")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
