@@ -1,13 +1,14 @@
 import streamlit as st
 import re
 import os
+import time
 import assets.app_engine as engine
 from assets.app_engine import Scanner
-from assets.template import generate_basic_template
-from assets.template import generate_advanced_template
+from assets.template import generate_basic_template, generate_advanced_template, generate_web_template
 from assets.queryCVEs import fetch_cves
 import json
 from datetime import datetime
+from modules.settings import settings
 
 
 def dashboard():
@@ -17,14 +18,20 @@ def dashboard():
     # Sanitize user input
     # Ensure the IP address is valid and not empty
     def is_valid_ip_or_domain(value):
-        ip_pattern = re.compile(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")
-        domain_pattern = re.compile(r"^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$")
-        return ip_pattern.match(value) or domain_pattern.match(value)
+        ip_pattern = re.compile(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?::[0-9]{1,5})?$")
+        domain_pattern = re.compile(r"^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?::[0-9]{1,5})?$")
+        localhost_pattern = re.compile(r"^localhost(?::[0-9]{1,5})?$")
+        return ip_pattern.match(value) or domain_pattern.match(value) or localhost_pattern.match(value)
+
+    # Validate project name
+    def is_valid_project_name(name):
+        invalid_chars_pattern = re.compile(r"[^\w\- ]")  # Allow only alphanumeric, underscores, hyphens, and spaces
+        return not invalid_chars_pattern.search(name)
 
     with st.form("scan_form", clear_on_submit=False):
         ip = st.text_input("Enter Target IP Address", placeholder="e.g., 192.168.1.1")
         
-        scan_mode = st.radio("Select Scan Mode", options=["Basic", "Advanced"], index=0, horizontal=True) 
+        scan_mode = st.radio("Select Scan Mode", options=["Basic", "Advanced", "Web"], index=0, horizontal=True) 
 
         col1, col2 = st.columns([3, 1], vertical_alignment="bottom")  # 75% for col1, 25% for col2
         with col1:
@@ -42,11 +49,9 @@ def dashboard():
         if submit:
             if not ip or not is_valid_ip_or_domain(ip):
                 st.warning("Please enter a valid IP address or domain name.")
-                return
                 
-            elif not project_name:
+            elif not project_name or not is_valid_project_name(project_name):
                 st.warning("Please enter a valid project name.")
-                return
             
             else:
                 st.success(f"Scan initiated for `{ip}` using **{scan_mode}** mode.")
@@ -59,8 +64,13 @@ def dashboard():
                             result = scanner.run_basic_scan()
                             page_code = generate_basic_template(ip, result)
                         elif scan_mode == "Advanced":
-                            result = scanner.run_advanced_scan()
-                            page_code = generate_advanced_template(ip, result)  
+                            scanner.run_advanced_scan()
+                            page_code = generate_advanced_template(ip)
+                        elif scan_mode == "Web":
+                            # wordlist = settings().wordlist
+                            host,endpoints = scanner.run_web_scan(settings.uploaded_file)
+                            page_code = generate_web_template(host,endpoints)
+                                                   
                         
                         # Save the generated page code to a new file in the PAGES_DIR
                         sanitized_project_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", project_name.strip())
@@ -68,9 +78,10 @@ def dashboard():
 
                         with open(os.path.join(PAGES_DIR, page_filename), "w") as f:
                             f.write(page_code)  
-                        # Display a success message and a hint to restart the app
-                        # to view the new page
-                        st.success("Scan complete. Restart app to view new page.")
+                        # Display a success message
+                        st.success("Scan complete. Restarting app to view the new page.")
+                        time.sleep(1)
+                        st.rerun()
                     except Exception as e:
                         st.error(f"Scan failed: {e}")
 
@@ -83,7 +94,7 @@ def dashboard():
     
     col1, col2 = st.columns([3, 1])  # 75% for col1, 25% for col2
     with col1:
-        st.write("Read insights from recent CVEs")
+        st.write("Read more about the latest CVEs on [CVE Details](https://www.cvedetails.com/)")
     with col2:
         # Load the timestamp from the .cve_cache.json file
         cve_cache_file = os.path.join("assets", "data", ".cve_cache.json")
@@ -94,16 +105,31 @@ def dashboard():
             if timestamp:
                 # Convert the timestamp to a human-readable format
                 last_updated_time = datetime.fromtimestamp(timestamp).strftime("%I:%M %p")
-                st.caption(f"Last Updated: {last_updated_time}")
+                st.badge(f"Last Updated: {last_updated_time}", color="grey")
             else:
                 st.caption("Last Updated: Unknown")
         except Exception as e:
             st.caption(f"Last Updated: Error loading timestamp ({e})")
     
     if data:
-        for item in data:
-            col = st.columns(1, border=True)[0]  # Create a single column for each CVE
-            with col:
-                st.subheader(item.get("id", "N/A"))
-                st.write(f"**Summary:** {item.get('summary', 'N/A')}")
-                st.write(f"**Published Date:** {item.get('published', 'N/A')}")
+        for i in range(0, len(data), 2):
+            col1, col2 = st.columns(2, border=True)  # Create two columns for each row
+            with col1:
+                if i < len(data):
+                    item = data[i]
+                    cve_id = item.get("id", "N/A")
+                    st.badge(cve_id, color="red")
+                    st.write(f"**Summary:** {item.get('summary', 'N/A')}")
+                    st.write(f"**Published Date:** {item.get('published', 'N/A')}")
+                    cve_link = f"https://www.cve.org/CVERecord?id={cve_id}"
+                    st.link_button("View Details", url=cve_link)
+
+            with col2:
+                if i + 1 < len(data):
+                    item = data[i + 1]
+                    cve_id = item.get("id", "N/A")
+                    st.badge(cve_id, color="red")
+                    st.write(f"**Summary:** {item.get('summary', 'N/A')}")
+                    st.write(f"**Published Date:** {item.get('published', 'N/A')}")
+                    cve_link = f"https://www.cve.org/CVERecord?id={cve_id}"
+                    st.link_button("View Details", url=cve_link)

@@ -26,7 +26,6 @@ def assistant():
     # chat_with_gemma()
     st.title("Octaprobe Assistant")
 
-
     if "messages" not in st.session_state:
         st.session_state.messages = []
 

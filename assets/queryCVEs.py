@@ -16,8 +16,8 @@ def fetch_cves():
             cache_data = json.load(f)
             last_updated = cache_data.get("timestamp", 0)
 
-        # If cache is less than 6 hours old, use it
-        if current_time - last_updated < 6 * 60 * 60:
+        # If cache is less than 1 hours old, use it
+        if current_time - last_updated < 1 * 60 * 60:
             cves = cache_data.get("cves", [])
             for cve in cves:
                 result = [{"id": cve.get("cve_id"), 
@@ -31,7 +31,7 @@ def fetch_cves():
     # Fetch new data if cache is invalid or expired
     endpoint = "https://cvedb.shodan.io/cves"
     params = {
-        "limit": 3
+        "limit": 4
     }
 
     response = requests.get(endpoint, params=params)

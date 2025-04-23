@@ -1,5 +1,6 @@
 # Requirements for the project
 
-vulners
 streamlit
 ollama
+hachoir
+pefile

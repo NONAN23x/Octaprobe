@@ -83,6 +83,7 @@ StyleCopReport.xml
 *.pgc
 *.pgd
 *.rsp
+*.jpg
 # but not Directory.Build.rsp, as it configures directory-level build defaults
 !Directory.Build.rsp
 *.sbr
@@ -145,20 +146,21 @@ _TeamCity*
 .axoCover/*
 !.axoCover/settings.json
 
-
+Dockerfile
 runtime
 bin
 include
 lib
 lib64
-assets/data
 include
 etc
 share
 pages
 assets/webapp_test.py
 pyvenv.cfg
-assets/data/
+assets/data/octaprobe.db
+assets/data/.cve_cache.json
+
 
 # Coverlet is a free, cross platform Code Coverage Tool
 coverage*.json
