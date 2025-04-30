@@ -6,9 +6,11 @@
 # --------------------------------------------
 
 
-def generate_basic_template(ip: str, scan_result) -> str:
+def generate_basic_template(ip: str) -> str:
     return f"""import streamlit as st
 import pandas as pd
+import os
+import json
 try :
     from ollama import ChatResponse
     from ollama import chat
@@ -20,7 +22,12 @@ st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
 col1, col2, col3, col4, col5 = st.columns(5)
 col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
-st.sidebar.title("📁 Scan Projects")
+
+with st.sidebar:
+        st.title("📁 Scan Projects")
+        st.divider()
+        st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
+        st.link_button("View the source", url="https://github.com/NONAN23x/Octaprobe")
 
 #if ollamaNotFound:
 #        st.error("Ollama is not installed. Please install it to use this feature.")
@@ -35,11 +42,23 @@ def chat_with_OctaBot(userInput: str):
 st.divider()
 st.subheader("Target: {ip}")
 st.write("📄 Basic Scan Result")
-localData = {scan_result}
 
+cache_file = os.path.join(os.getcwd(), ".cache", "{ip}_basic.json")
+if os.path.exists(cache_file):
+    with open(cache_file, "r") as file:
+        localData = json.load(file)
 
-df = pd.DataFrame(localData, columns=["Open Ports"])
-st.table(df)
+    if localData:
+        table_data = [
+            {{"Port": entry.get("port", "N/A"), "Banner": entry.get("banner", "N/A")}}
+            for entry in localData
+        ]
+        df = pd.DataFrame(table_data)
+        st.table(df)
+    else:
+        st.warning("Host is down or no valid data found in the cache file.")
+else:
+    st.error(f"No scan data found for {ip} in cache")
 """
 
 
@@ -58,7 +77,12 @@ st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
 col1, col2, col3, col4, col5 = st.columns(5)
 col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
-st.sidebar.title("📁 Scan Projects")
+
+with st.sidebar:
+        st.title("📁 Scan Projects")
+        st.divider()
+        st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
+        st.link_button("View the source", url="https://github.com/NONAN23x/Octaprobe")
 
 #if ollamaNotFound:
 #        st.error("Ollama is not installed. Please install it to use this feature.")
@@ -88,6 +112,7 @@ if os.path.exists(cache_file):
             st.warning("No valid port information found.")
     else:
         st.warning("No port information found in the cache file.")
+        st.warning("Check the IP Address, are you sure the host is running?")
 
 else:
     st.error(f"No scan data found for localhost in cache")
@@ -104,7 +129,13 @@ st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
 col1, col2, col3, col4, col5 = st.columns(5)
 col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
-st.sidebar.title("📁 Scan Projects")
+
+with st.sidebar:
+        st.title("📁 Scan Projects")
+        st.divider()
+        st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
+        st.link_button("View the source", url="https://github.com/NONAN23x/Octaprobe")
+        
 entries = {endpoint}
 st.write("📄 Web Scan Result")
 data = [{{"Index": idx, "Endpoint": f"{ip}/{{endpoint}}"}} for idx, endpoint in enumerate(entries, start=1)]

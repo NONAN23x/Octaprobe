@@ -8,6 +8,9 @@
 import os
 import subprocess
 import requests
+import json
+import socket
+import concurrent.futures
 
 def initialize():
     """
@@ -15,15 +18,64 @@ def initialize():
     """
     PAGES_DIR = "pages"
     os.makedirs(PAGES_DIR, exist_ok=True)
-    return PAGES_DIR
+    
+    cache_file = os.path.join(os.getcwd(), "assets", "data", ".cve_cache.json")
+    if not os.path.exists(cache_file):
+        with open(cache_file, "w") as f:
+            json.dump({"timestamp": 0, "cves": []}, f)
+    
+    try:
+        subprocess.run(["nmap", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        nmapInstalled = True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        nmapInstalled = False
+
+    return nmapInstalled, PAGES_DIR
 
 class Scanner:
     """
     Custom Scanner Class to run security scans on the given target
     """
-    def __init__(self, ip: str):
+    def __init__(self, ip: str, ports=None, timeout=2):
         self.ip = ip
+        self.ports = ports if ports else range(1, 1024)
+        self.timeout = timeout
+        self.results = []
 
+    def scan_port(self, port):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(self.timeout)
+            result = s.connect_ex((self.ip, port))
+            if result == 0:
+                try:
+                    s.send(b'\n')
+                    banner = s.recv(1024).decode(errors="ignore").strip()
+                    if not banner:
+                        banner = "Couldn't Identify Banner"
+                    else:
+                        # Sanitize banner: keep only until first \r or \n
+                        banner = banner.split('\r')[0].split('\n')[0]
+                except:
+                    banner = "Couldn't Identify Banner"
+                return {"port": port, "banner": banner}
+        return None
+    
+    def run_scan(self, max_workers=100, save_to_file=True):
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(self.scan_port, port): port for port in self.ports}
+            for future in concurrent.futures.as_completed(futures):
+                result = future.result()
+                if result:
+                    self.results.append(result)
+        self.results.sort(key=lambda x: x["port"]) # to sort the results by port number, because concurrent scan may not be in order
+        if save_to_file:
+            filename = os.path.join(os.getcwd(), ".cache", f"{self.ip}_basic.json")
+            if not os.path.exists(os.path.dirname(filename)):
+                os.makedirs(os.path.dirname(filename), exist_ok=True)
+            with open(filename, "w") as f:
+                f.write(json.dumps(self.results, indent=2))
+        return self.ip
+    
     def run_basic_scan(self) -> str:
         cmd = ["nmap", "-T5", self.ip]
         result = subprocess.check_output(cmd, stderr=subprocess.STDOUT, text=True, timeout=90)

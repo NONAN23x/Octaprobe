@@ -13,7 +13,7 @@ from modules.settings import settings
 
 def dashboard():
     # Set the page configuration, and other workarounds
-    PAGES_DIR = engine.initialize()
+    nmapFound, PAGES_DIR = engine.initialize()
 
     # Sanitize user input
     # Ensure the IP address is valid and not empty
@@ -66,15 +66,21 @@ def dashboard():
                             result = scanner.run_scan()
                             page_code = generate_basic_template(result)
                         elif scan_mode == "Advanced":
-                            st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
-                            scanner.run_advanced_scan()
-                            page_code = generate_advanced_template(ip)
+                            if nmapFound:
+                                st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
+                                scanner.run_advanced_scan()
+                                page_code = generate_advanced_template(ip)
+                            else:
+                                st.warning("Nmap not found. Please install Nmap to use this feature.")
+                                st.toast("Installl all dependencies prior running this app!!!", icon="🚫")
+                                return
+
                         elif scan_mode == "Web":
                             st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
                             host,endpoints = scanner.run_web_scan()
                             page_code = generate_web_template(host,endpoints)
                                                    
-                        
+          
                         # Save the generated page code to a new file in the PAGES_DIR
                         sanitized_project_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", project_name.strip())
                         page_filename = f"{sanitized_project_name}.py"

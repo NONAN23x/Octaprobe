@@ -1,3 +1,4 @@
+import socket
 import streamlit as st
 try :
     from ollama import ChatResponse
@@ -6,7 +7,6 @@ try :
 except ImportError:
     ollamaNotFound = True
 
-
 def assistant():
 
     if ollamaNotFound:
@@ -14,14 +14,17 @@ def assistant():
         return
     
     def chat_with_OctaBot(userInput: str):
-        response: ChatResponse = chat(model='OctaBot', stream=True, messages=[
-        {
-            'role': 'user',
-            'content': userInput,
-        },
-        ])
-        for chunk in response:
-            yield chunk['message']['content']
+        try:
+            response: ChatResponse = chat(model='OctaBot', stream=True, messages=[
+            {
+                'role': 'user',
+                'content': userInput,
+            },
+            ])
+            for chunk in response:
+                yield chunk['message']['content']
+        except Exception as e:
+            st.error(f"Is ollama running?: {e}")
 
     st.subheader("Chat with OctaBot")
 
@@ -38,7 +41,6 @@ def assistant():
         # Display user message in chat message container
         with st.chat_message("user"):
             st.write(prompt)
-
 
     if prompt:
         stream = chat_with_OctaBot(prompt)

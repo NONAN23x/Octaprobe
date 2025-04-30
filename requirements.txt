@@ -4,3 +4,5 @@ streamlit
 ollama
 hachoir
 pefile
+pyexiftool
+pyelftools

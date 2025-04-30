@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 try:
     import pefile
     from elftools.elf.elffile import ELFFile
@@ -43,8 +44,7 @@ def analysis():
         st.warning("Waiting for file upload...")
         return
     elif uploaded_file is not None:
-        # Save the uploaded file to a temporary location
-        temp_file_path = f"/tmp/{uploaded_file.name}"
+        temp_file_path = os.path.join(os.getcwd(), "assets", "data", uploaded_file.name)
         with open(temp_file_path, "wb") as temp_file:
             temp_file.write(uploaded_file.read())
 
