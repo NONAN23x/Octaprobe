@@ -63,8 +63,8 @@ def dashboard():
                         scanner = Scanner(ip) # OOPs !!!    
                         if scan_mode == "Basic":
                             st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
-                            result = scanner.run_basic_scan()
-                            page_code = generate_basic_template(ip, result)
+                            result = scanner.run_scan()
+                            page_code = generate_basic_template(result)
                         elif scan_mode == "Advanced":
                             st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
                             scanner.run_advanced_scan()
