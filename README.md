@@ -1,120 +1,109 @@
-# Octaprobe
-Yet Another Vulnerability Scanner
+<div align=center> 
 
-### Lab Setup
+# OctaProbe 🐙
 
-1. Install Virtualization Software
-- Go to the [VirtualBox download page](https://www.virtualbox.org/wiki/Downloads).
-- Choose the appropriate version for your operating system (Windows, macOS, Linux).
-- Download the installer file.
-- Run the installer and follow the on-screen instructions to complete the installation.
-- Once installed, open VirtualBox to ensure it is working correctly.
+### Yet Another Vulnerability Scanner
+![Static Badge](https://img.shields.io/badge/Python-Lol?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/Streamlit-badge?style=for-the-badge&color=%236200EA)
+![Static Badge](https://img.shields.io/badge/Ollama-badge?style=for-the-badge&color=%23212121)
 
-2. Install Kali Linux using VirtualBox
-- Go to the [Kali Linux download page](https://www.kali.org/get-kali/#kali-virtual-machines).
-- Under the "Virtual Machines" section, choose the VirtualBox option.
-- Download the appropriate image for your system architecture (64-bit or 32-bit).
-- Open VirtualBox and click on `File` > `Import Appliance`.
-- Browse to the downloaded Kali Linux image file and select it.
-- Follow the prompts to import the virtual machine.
-- Once the import is complete, start the Kali Linux virtual machine from the VirtualBox Manager.
+### Repository Statistics
 
-3. Install Metasploitable2
-- Go to the [Metasploitable2 download page](https://sourceforge.net/projects/metasploitable/files/Metasploitable2/).
-- Click on the download link to get the Metasploitable2 zip file.
-- Extract the downloaded zip file to a location of your choice.
-- Open VirtualBox and click on `File` > `Import Appliance`.
-- Browse to the extracted Metasploitable2 `.ova` file and select it.
-- Follow the prompts to import the virtual machine.
-- Once the import is complete, start the Metasploitable2 virtual machine from the VirtualBox Manager.
+![GitHub License](https://img.shields.io/github/license/NONAN23x/Octaprobe)
+![GitHub repo size](https://img.shields.io/github/repo-size/NONAN23x/Octaprobe)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/NONAN23x/Octaprobe)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/NONAN23x/Octaprobe)
+![GitHub last commit](https://img.shields.io/github/last-commit/NONAN23x/Octaprobe)
 
-4. Verify Setup
-- Start both the Kali Linux and Metasploitable2 virtual machines in VirtualBox.
-- In Kali Linux, open a terminal window.
-- Determine the IP address of the Metasploitable2 machine by logging into it and running the command `ifconfig` or `ip a`.
-- In the Kali Linux terminal, use the `ping` command followed by the IP address of the Metasploitable2 machine. For example:
-    ```sh
-    ping 192.168.1.100
-    ```
-- If the network is configured correctly, you should see replies from the Metasploitable2 machine.
-- Press `Ctrl + C` to stop the ping command.
+### Target Operating Systems
 
-5. Configure API Key
-a. For Kali Linux:
-- Open a terminal in your Kali Linux virtual machine.
-- Edit the `.bashrc` file to add the API key as an environment variable:
-    ```sh
-    nano ~/.bashrc
-    ```
-- Add the following line at the end of the file, replacing `YOUR_API_KEY` with your actual API key:
-    ```sh
-    export VULNERS_API_KEY=<YOUR_API_KEY>
-    ```
-- Save the file and exit the editor by pressing `Ctrl + X`, then `Y`, and `Enter`.
-- Apply the changes by sourcing the `.bashrc` file:
-    ```sh
-    source ~/.bashrc
-    ```
-- Verify that the environment variable is set correctly:
-    ```sh
-    echo $VULNERS_API_KEY
-    - You should see your API key printed in the terminal.
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-b. For Windows:
-- Open the Start Menu and search for "Environment Variables".
-- Click on "Edit the system environment variables".
-- In the System Properties window, click on the "Environment Variables" button.
-- In the Environment Variables window, under the "User variables" section, click on "New".
-- In the "New User Variable" dialog, enter `VULNERS_API_KEY` as the variable name and your actual API key as the variable value.
-- Click "OK" to save the new variable.
-- Close all remaining windows by clicking "OK".
-- Open a new Command Prompt window to apply the changes.
-- Verify that the environment variable is set correctly:
-    ```sh
-    echo %VULNERS_API_KEY%
-    ```
-- You should see your API key printed in the terminal.
+</div>
 
+<br><br>
 
-### Environment Setup
+-- -
 
-1. Download the Project
-- Open a terminal in your Kali Linux virtual machine.
-- Ensure you have `git` installed by running:
-    ```sh
-    sudo apt-get update
-    sudo apt-get install git
-    ```
-- Navigate to the directory where you want to clone the repository:
-    ```sh
-    cd /path/to/your/directory
-    ```
-- Clone the repository using the following command:
-    ```sh
+### ❓ What is it?
+
+OctaProbe is a lightweight and efficient vulnerability scanner designed to identify security weaknesses in various systems. Built with Python and leveraging modern frameworks like Streamlit, it provides an intuitive interface for users to perform scans and analyze results. OctaProbe supports multiple operating systems, making it a versatile tool for developers, security analysts, and IT professionals.
+
+<br><br>
+-- -
+### 🚀 How to Install?
+
+1. Clone the repository:
+    ```bash
     git clone https://github.com/NONAN23x/Octaprobe.git
-    ```
-- Navigate into the cloned repository directory:
-    ```sh
     cd Octaprobe
     ```
-- Verify the contents of the repository:
-    ```sh
-    ls
-    ```
-- You have successfully cloned the repository into your Kali Linux machine.
 
-2. Install Dependencies
-a. For Kali Linux:
-- Ensure you have `pip` installed by running:
-    ```sh
-    sudo apt-get install python3-pip
-    ```
-
-b. For Windows:
-- Open a Command Prompt window.
-- Install the required Python packages using `requirements.txt`:
-    ```sh
+2. Install the required dependencies:
+    ```bash
     pip install -r requirements.txt
     ```
 
-### Running the Scanner
+3. Start the Ollama service:  
+    Ensure that the Ollama service is properly set up and running before launching the application. This service is a critical component that enables the application's backend functionality. To configure and start the Ollama service, you can refer to the official [Ollama Documentation](https://ollama.com/docs) or other trusted online resources. Make sure the service is active and accessible to avoid any runtime issues.
+
+
+4. Run the application:  
+    ```bash
+    streamlit run app.py
+    ```
+
+    > 💡 **Note**  
+     For detailed installation instructions for specific operating systems, please refer to the [Project Wiki](https://github.com/NONAN23x/Octaprobe/wiki)! We're excited to help you get started!
+
+<br><br>
+-- -
+
+### 🤝 Contributing
+We welcome contributions from the community! Here's how you can contribute:
+
+1. **Fork the Repository**:  
+    Click the "Fork" button at the top-right corner of this repository to create your own copy.
+
+2. **Clone Your Fork**:  
+    ```bash
+    git clone https://github.com/your-username/Octaprobe.git
+    cd Octaprobe
+    ```
+
+3. **Create a Branch**:  
+    Create a new branch for your feature or bug fix.  
+    ```bash
+    git checkout -b feature-name
+    ```
+
+4. **Make Changes**:  
+    Implement your changes and commit them with a descriptive message.  
+    ```bash
+    git add .
+    git commit -m "Add a brief description of your changes"
+    ```
+
+5. **Push Changes**:  
+    Push your changes to your forked repository.  
+    ```bash
+    git push origin feature-name
+    ```
+
+6. **Submit a Pull Request**:  
+    Open a pull request to the main repository. Provide a clear description of your changes and why they should be merged.
+
+<br><br>
+
+-- -
+
+### Guidelines
+
+- Ensure your code follows the project's coding standards.
+- Write clear and concise commit messages.
+- Test your changes thoroughly before submitting.
+- Be respectful and constructive in code reviews and discussions.
+
+Thank you for contributing to OctaProbe! 🚀
