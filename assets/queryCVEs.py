@@ -1,7 +1,16 @@
+###############################################################################
+# Octaprobe Security Scanner - Network Security Analysis Suite
+# Secure, Scalable, Enterprise-Grade Scanning Infrastructure (atleast we try)
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
+
 import requests
 import json
 import os
 import time
+
 
 def fetch_cves():
     cache_file = os.path.join(os.getcwd(), "assets", "data", ".cve_cache.json")
@@ -49,4 +58,3 @@ def fetch_cves():
                    "published": cve.get("published_time")} 
                    for cve in cves]
         return result
-

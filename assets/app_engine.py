@@ -1,9 +1,10 @@
-# This file is part of the Octaprobe project.
-# It is subject to the license terms in the LICENSE file found 
-# in the top-level directory of this distribution
-# -------------------------------------------
-# Supporting libraries for our custom scanner
-# -------------------------------------------
+###############################################################################
+# Octaprobe Security Scanner - Network Security Analysis Suite
+# Secure, Scalable, Enterprise-Grade Scanning Infrastructure (atleast we try)
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
 
 import os
 import subprocess
@@ -12,17 +13,21 @@ import json
 import socket
 import concurrent.futures
 
+
 def initialize():
     """
     Utility function to win over quick and easy hacks
     """
-    PAGES_DIR = "pages"
+    cache_path = os.path.join(os.getcwd(), "assets", "data")
+    PAGES_DIR = os.path.join(os.getcwd(), "pages")
     os.makedirs(PAGES_DIR, exist_ok=True)
+    os.makedirs(cache_path, exist_ok=True)
     
-    cache_file = os.path.join(os.getcwd(), "assets", "data", ".cve_cache.json")
+    cache_file = os.path.join(cache_path, ".cve_cache.json")
     if not os.path.exists(cache_file):
         with open(cache_file, "w") as f:
             json.dump({"timestamp": 0, "cves": []}, f)
+            
     
     try:
         subprocess.run(["nmap", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
@@ -122,8 +127,3 @@ class Scanner:
             print(f"Wordlist file not found: {wordlist_path}")
         
         return self.ip, discovered_endpoints
-
-        # Example usage:
-        # dirbust("192.168.1.1", "wordlist.txt")
-
-    

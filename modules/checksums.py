@@ -1,3 +1,11 @@
+###############################################################################
+# Octaprobe Security Scanner - Security Analysis Suite
+# Secure, Scalable, Scanning Infrastructure
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
+
 import streamlit as st
 import hashlib
 import base64
@@ -60,7 +68,17 @@ def generate_checksums():
     
 
     # Set the title and description of the app
-    st.subheader("Upload a file to generate checksums")
+    
+    # Create two columns for layout
+    col1, col2 = st.columns([0.9, 0.1])
+    
+    with col1:
+        st.write("#### Generate Checksums and verify file signatures, extract metadata, and analyze file contents.")
+    
+    with col2:
+        with st.popover("💡"):
+            st.write("Please ensure that the required libraries are installed. If not, please install them by running setup.py")
+
     uploaded_file = st.file_uploader("Choose a file")
 
     if uploaded_file is None:
@@ -107,5 +125,3 @@ def generate_checksums():
         st.write("**Base64 Checksum**")
         uploaded_file.seek(0)
         st.code(base64sum(uploaded_file))
-
-    

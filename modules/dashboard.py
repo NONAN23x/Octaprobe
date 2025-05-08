@@ -1,3 +1,11 @@
+###############################################################################
+# Octaprobe Security Scanner - Security Analysis Suite
+# Secure, Scalable, Scanning Infrastructure
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
+
 import streamlit as st
 import re
 import os
@@ -8,7 +16,6 @@ from assets.template import generate_basic_template, generate_advanced_template,
 from assets.queryCVEs import fetch_cves
 import json
 from datetime import datetime
-from modules.settings import settings
 
 
 def dashboard():
@@ -27,6 +34,17 @@ def dashboard():
     def is_valid_project_name(name):
         invalid_chars_pattern = re.compile(r"[^\w\- ]")  # Allow only alphanumeric, underscores, hyphens, and spaces
         return not invalid_chars_pattern.search(name)
+
+    # Create two columns for layout
+    col1, col2 = st.columns([0.9, 0.1])
+    
+    with col1:
+        st.write("#### Start projects, manage scans, and analyze results with ease.")
+    
+    with col2:
+        with st.popover("💡"):
+            st.write("This tool is designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
+            st.warning("Fair Usage Policy: Please use this tool responsibly and ethically. Unauthorized scanning of networks or systems without permission is illegal and unethical. Always ensure you have the necessary permissions before conducting any scans.")    
 
     with st.form("scan_form", clear_on_submit=False):
         ip = st.text_input("Enter Target IP Address", placeholder="e.g., 192.168.1.1")
@@ -85,7 +103,7 @@ def dashboard():
                         sanitized_project_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", project_name.strip())
                         page_filename = f"{sanitized_project_name}.py"
 
-                        with open(os.path.join(PAGES_DIR, page_filename), "w") as f:
+                        with open(os.path.join(PAGES_DIR, page_filename), "w", encoding="utf-8") as f:
                             f.write(page_code)  
                         # Display a success message
                         st.toast(f"{scan_mode} Scan completed successfully!", icon="✅")
@@ -97,7 +115,6 @@ def dashboard():
 
     
     # present basic recent CVE's information
-    st.divider()
     data = fetch_cves()
 
     st.subheader("Recent CVEs")

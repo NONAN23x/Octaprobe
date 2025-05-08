@@ -1,4 +1,11 @@
-import socket
+###############################################################################
+# Octaprobe Security Scanner - Security Analysis Suite
+# Secure, Scalable, Scanning Infrastructure
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
+
 import streamlit as st
 try :
     from ollama import ChatResponse
@@ -26,7 +33,17 @@ def assistant():
         except Exception as e:
             st.error(f"Is ollama running?: {e}")
 
-    st.subheader("Chat with OctaBot")
+    # Create two columns with specified width ratio
+    col1, col2 = st.columns([0.9, 0.1])
+    
+    with col1:
+        st.write("#### The OctaBot is designed to provide helpful responses and guidance based on your input. Feel free to ask anything related to the tool or its features")
+    
+    with col2:
+        with st.popover("💡"):
+            st.write("You can ask questions like: 'How to use the tool?', 'What features are available?', 'Can you help me with a specific task?'. Please ensure that the required libraries are installed. If not, please install them by running setup.py")
+            st.info("Note: The assistant is powered by Ollama. Ensure that the Ollama service is running for the assistant to function properly.")
+            st.write("If you encounter any issues, please check the Ollama installation and ensure that the model is available.")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -42,7 +59,6 @@ def assistant():
         with st.chat_message("user"):
             st.write(prompt)
 
-    if prompt:
         stream = chat_with_OctaBot(prompt)
 
         with st.chat_message("assistant"):

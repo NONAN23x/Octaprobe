@@ -1,9 +1,12 @@
-# This file is part of the Octaprobe project.
-# It is subject to the license terms in the LICENSE file found
-#  at the top-level directory of this project
-# --------------------------------------------
+###############################################################################
+# Octaprobe Security Scanner - Network Security Analysis Suite
+# Secure, Scalable, Enterprise-Grade Scanning Infrastructure (atleast we try)
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
 # Quick and dirty template generator for Streamlit
-# --------------------------------------------
+###############################################################################
 
 
 def generate_basic_template(ip: str) -> str:
@@ -20,8 +23,6 @@ except ImportError:
 st.set_page_config("Octaprobe", page_icon=":octopus:")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
-col1, col2, col3, col4, col5 = st.columns(5)
-col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
 
 with st.sidebar:
         st.title("📁 Scan Projects")
@@ -75,8 +76,6 @@ except ImportError:
 st.set_page_config("Octaprobe", page_icon=":octopus:")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
-col1, col2, col3, col4, col5 = st.columns(5)
-col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
 
 with st.sidebar:
         st.title("📁 Scan Projects")
@@ -123,22 +122,52 @@ else:
 def generate_web_template(ip: str, endpoint) -> str:
     return f"""import streamlit as st
 import pandas as pd
-import subprocess   
+import subprocess
+import requests
 st.set_page_config("Octaprobe", page_icon=":octopus:")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
-col1, col2, col3, col4, col5 = st.columns(5)
-col1.badge("Python", color="violet"); col2.badge('VulnersAPI', color="orange"); col3.badge('LangChain', color='green'); col4.badge("nmap", color='violet') ; col5.badge("Streamlit", color="red")
 
 with st.sidebar:
         st.title("📁 Scan Projects")
         st.divider()
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
         st.link_button("View the source", url="https://github.com/NONAN23x/Octaprobe")
-        
+host = "{ip}"
 entries = {endpoint}
 st.write("📄 Web Scan Result")
-data = [{{"Index": idx, "Endpoint": f"{ip}/{{endpoint}}"}} for idx, endpoint in enumerate(entries, start=1)]
+data = [{{"Endpoint": f"{ip}/{{endpoint}}"}} for endpoint in enumerate(entries, start=1)]
 df = pd.DataFrame(data)
 st.table(df)
+
+col1, col2 = st.columns([0.8, 0.2])
+with col1:
+        customfile = st.file_uploader("Scan with a custom wordlist?", type=["txt"])
+with col2:
+        scan_button = st.button("Start Scan", use_container_width=True)
+
+if customfile is not None and scan_button:
+        wordlist = customfile.read().decode("utf-8").splitlines()
+        progress_bar = st.progress(0)
+        results = []
+
+        for idx, word in enumerate(wordlist):
+            url = f"http://{{host}}/{{word}}"
+            try:
+                response = requests.get(url, timeout=5)
+                status_code = str(response.status_code)
+                if status_code == "200":
+                    results.append({{"Endpoint": url}})
+            except Exception as e:
+                st.error(f"Error scanning {{url}}: {{e}}")
+            progress_bar.progress((idx + 1) / len(wordlist))
+
+        progress_bar.empty()
+        if results:
+            st.success("Scan completed. Found the following endpoints:")
+            result_df = pd.DataFrame(results)
+            st.table(result_df)
+        else:
+            st.warning("Scan completed. No endpoints found.")
+
 """

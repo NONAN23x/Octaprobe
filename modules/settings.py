@@ -1,3 +1,11 @@
+###############################################################################
+# Octaprobe Security Scanner - Network Security Analysis Suite
+# Secure, Scalable, Enterprise-Grade Scanning Infrastructure (atleast we try)
+###############################################################################
+# Licensed under the terms specified in the LICENSE file
+# Built as a part of Osmania University- B.E Final Year Project
+###############################################################################
+
 import streamlit as st
 import os
 import time
