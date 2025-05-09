@@ -12,7 +12,18 @@ import time
 
 
 def settings():
-    st.write("Scan History")
+    
+    # Create two columns for layout
+    col1, col2 = st.columns([0.9, 0.1])
+
+    with col1:
+        st.write("#### Tune the settings to enhance your scanning experience.")
+    
+    with col2:
+        with st.popover("💡"):
+            st.write("You can customize the settings to enhance your scanning experience.")
+            st.write("This includes selecting themes, managing previous scans, and configuring other preferences.")
+            
     # Directory containing the pages
     pages_dir = os.path.join(os.getcwd(), "pages")
 
@@ -23,18 +34,18 @@ def settings():
         pages = []
 
     success_message = None
-
+    st.divider()
     if pages:
         st.badge("📁 Previous Scans")
     else:
         st.caption("💡 No previous scans were found.")
 
     for page in pages:
-        col1, col2 = st.columns([4, 1])
+        col1, col2 = st.columns([0.9, 0.1])
         with col1:
             st.write(os.path.splitext(page)[0])
         with col2:
-            if st.button("Delete 🗑️", key=f"delete_{page}"):
+            if st.button("🗑️", key=f"delete_{page}"):
                 os.remove(os.path.join(pages_dir, page))
                 success_message = f"Deleted {page}"
                 st.toast(f"Deleted {page}", icon="🟢")

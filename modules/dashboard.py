@@ -39,12 +39,12 @@ def dashboard():
     col1, col2 = st.columns([0.9, 0.1])
     
     with col1:
-        st.write("#### Start projects, manage scans, and analyze results with ease.")
+        st.write("#### Start Projects, Manage Scans, and Analyze results with ease!")
     
     with col2:
         with st.popover("💡"):
             st.write("This tool is designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-            st.warning("Fair Usage Policy: Please use this tool responsibly and ethically. Unauthorized scanning of networks or systems without permission is illegal and unethical. Always ensure you have the necessary permissions before conducting any scans.")    
+            st.warning("Fair Usage Notice: Please use this tool responsibly and ethically. Unauthorized scanning of networks or systems without permission is illegal and unethical. Always ensure you have the necessary permissions before conducting any scans.")    
 
     with st.form("scan_form", clear_on_submit=False):
         ip = st.text_input("Enter Target IP Address", placeholder="e.g., 192.168.1.1")

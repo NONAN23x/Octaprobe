@@ -149,7 +149,17 @@ def sheets():
         st.progress(progress)
         st.success(f"✅ {completed} of {total} tasks completed ({int(progress * 100)}%)")
 
-    st.write("Cheatsheets")
+    # Create two columns for layout
+    col1, col2 = st.columns([0.9, 0.1])
+
+    with col1:
+        st.write("#### Useful Checklists to aid your security assessments!")
+    
+    with col2:
+        with st.popover("💡"):
+            st.write("These checklists are designed to help you identify potential security issues and improve the overall security posture of your systems.")
+            st.warning("Fair usage notice: These checklists are provided for educational purposes only. Please ensure you have permission to conduct security assessments on any system or network.")
+
 
     checklist_options = {
         "Linux Hardening": linux_hardening_cheatsheet,

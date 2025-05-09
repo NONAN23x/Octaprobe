@@ -28,7 +28,6 @@ def repeater():
         # Check for irrelevant characters
         allowed_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%"
         if any(char not in allowed_chars for char in sanitized_url):
-            st.error("Invalid URL: Contains disallowed characters.")
             return False
 
         return True
@@ -74,19 +73,20 @@ def repeater():
             st.caption(f"Time taken: {response.elapsed.total_seconds()}s")
 
         except Exception as e:
-            st.error(f"An error occurred: {e}")
+            with st.expander(label="An error occured, is the endpoint correct?", icon="🚨"):
+                st.warning(f"{e}")
 
 
     # Create two columns with specified width ratio
     col1, col2 = st.columns([0.9, 0.1])
     
     with col1:
-        st.write("#### API Testing tool. You can use it to test APIs by sending requests and viewing responses.")
+        st.write("#### Test functionality of APIs by sending modified requests and inspecting responses.")
     
     with col2:
         with st.popover("💡"):
             st.write("The tool supports GET and POST methods, and you can specify headers and payloads in JSON format")
-            st.warning("Fair Usage Policy: Please use this tool responsibly and avoid sending excessive requests to any API. This tool is intended for educational and testing purposes only.")
+            st.warning("Fair Usage Notice: Please use this tool responsibly and avoid sending excessive requests to any API. This tool is intended for educational and testing purposes only.")
             st.write("Ensure that you have permission to test the API and that you are not violating any terms of service.")
 
     # Columns for URL and Method
@@ -111,11 +111,8 @@ def repeater():
     st.divider()
     # Send button
     if send_request:
-        if sanitize_url(url):
-            # Check if URL is valid
-            st.success("URL is valid.")
-            # Send the API request
-            send_api_request(url, method, headers_str, payload_str)
+        if sanitize_url(url): # Check if URL is valid
+            send_api_request(url, method, headers_str, payload_str) # Send the API request
         else:
             st.error("Invalid URL. Please check the format and try again.")
     else:

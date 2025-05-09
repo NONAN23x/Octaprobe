@@ -25,16 +25,15 @@ def main():
     st.header("Yet Another Security Assessment Tool")
     
     with st.sidebar:
-        st.title("📁 Scan Projects")
-        st.divider()
+        st.title("📁 Scan History")
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-        st.link_button("View the source", url="https://github.com/NONAN23x/Octaprobe")
+        st.link_button("Grab the source from Github!", url="https://github.com/NONAN23x/Octaprobe")
 
     tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
         ["**:house: Dashboard**", 
          "**:key: Checksums**",
          "**:microscope: Malware Analysis**",
-         "**:robot: Assistant**",
+         "**:bust_in_silhouette: Assistant**",
          "**:link: APIs**",
          "**:notebook: Cheatsheets**",
          "**:gear: Settings**",

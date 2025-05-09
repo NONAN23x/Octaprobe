@@ -41,13 +41,13 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
     cd Octaprobe
     ```
 
-2. Install the required dependencies:
+2. Run the provided setup script:
     ```bash
-    pip install -r requirements.txt
+    python setup.py
     ```
 
-3. Start the Ollama service:  
-    Ensure that the Ollama service is properly set up and running before launching the application. This service is a critical component that enables the application's backend functionality. To configure and start the Ollama service, you can refer to the official [Ollama Documentation](https://ollama.com/docs) or other trusted online resources. Make sure the service is active and accessible to avoid any runtime issues.
+3. Follow the instructions laid out by the above script:  
+    > The script ensures that all required libraries are installed and that the Ollama service is properly set up. The setup script will automatically check for Ollama's installation and configuration. If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance. Please ensure the service is active and accessible to avoid any runtime issues.
 
 
 4. Run the application:  
@@ -62,7 +62,9 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
 -- -
 
 ### 🤝 Contributing
-We welcome contributions from the community! Here's how you can contribute:
+> We welcome contributions from the community! Before you begin, please take a moment to read the [CONTRIBUTING.md](https://github.com/NONAN23x/Octaprobe/blob/main/CONTRIBUTING.md) and [ROADMAP.md](https://github.com/NONAN23x/Octaprobe/blob/main/ROADMAP.md) files in the repository to understand the project's guidelines and future plans.
+
+After you've read the above documents, here's how you can contribute:
 
 1. **Fork the Repository**:  
     Click the "Fork" button at the top-right corner of this repository to create your own copy.
@@ -94,16 +96,3 @@ We welcome contributions from the community! Here's how you can contribute:
 
 6. **Submit a Pull Request**:  
     Open a pull request to the main repository. Provide a clear description of your changes and why they should be merged.
-
-<br><br>
-
--- -
-
-### Guidelines
-
-- Ensure your code follows the project's coding standards.
-- Write clear and concise commit messages.
-- Test your changes thoroughly before submitting.
-- Be respectful and constructive in code reviews and discussions.
-
-Thank you for contributing to OctaProbe! 🚀

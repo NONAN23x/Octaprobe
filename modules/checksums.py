@@ -73,11 +73,16 @@ def generate_checksums():
     col1, col2 = st.columns([0.9, 0.1])
     
     with col1:
-        st.write("#### Generate Checksums and verify file signatures, extract metadata, and analyze file contents.")
+        st.write("#### Generate Checksums, Verify file signatures, Extract metadata.")
     
     with col2:
         with st.popover("💡"):
-            st.write("Please ensure that the required libraries are installed. If not, please install them by running setup.py")
+            st.write("You can upload a file and the module will generate checksums (MD5, SHA-256, SHA-512, Base64) for the file.")
+            st.write("You can also upload a signature file to verify the file's signature.")
+            st.write("Additionally, you can extract metadata from image files.")
+            st.write("This module is useful for file integrity checks, digital forensics, and malware analysis.")
+            st.write("Please ensure that the required libraries are installed. If you haven't done so already, please install them by running setup.py")
+            st.info("Fair usage notice: This tool is intended for educational and research purposes only. Do not use it for any illegal activities.")
 
     uploaded_file = st.file_uploader("Choose a file")
 

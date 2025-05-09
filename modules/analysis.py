@@ -38,7 +38,7 @@ def analysis():
     col1, col2 = st.columns([0.9, 0.1])
     
     with col1:
-        st.write("#### You can use this section to analyze PE and ELF files. The tool will extract information such as entry point, image base, endianness, imported DLLs, sections, and entropy values.")
+        st.write("#### Analyze PE/ELF Binaries to uncover security-relevant information.")
     
     with col2:
         with st.popover("💡"):

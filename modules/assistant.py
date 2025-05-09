@@ -37,13 +37,13 @@ def assistant():
     col1, col2 = st.columns([0.9, 0.1])
     
     with col1:
-        st.write("#### The OctaBot is designed to provide helpful responses and guidance based on your input. Feel free to ask anything related to the tool or its features")
+        st.write("#### OctaBot is a friendly assistant that can help you with various tasks related to Octaprobe and Security Best Practises.")
     
     with col2:
         with st.popover("💡"):
-            st.write("You can ask questions like: 'How to use the tool?', 'What features are available?', 'Can you help me with a specific task?'. Please ensure that the required libraries are installed. If not, please install them by running setup.py")
+            st.write("You can ask questions like: `How to use the tool?`, `What features are available?`, `Can you help me with a specific task?`. Please ensure that the required libraries are installed. If not, please install them by running setup.py")
             st.info("Note: The assistant is powered by Ollama. Ensure that the Ollama service is running for the assistant to function properly.")
-            st.write("If you encounter any issues, please check the Ollama installation and ensure that the model is available.")
+            st.write("If you encounter any issues, please check the Ollama Documentation for troubleshooting steps.")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
