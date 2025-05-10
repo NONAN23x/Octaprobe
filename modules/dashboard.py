@@ -65,53 +65,55 @@ def dashboard():
         # main logic of the app
         # Check if the form is submitted and process the input
         if submit:
-            if not ip or not is_valid_ip_or_domain(ip):
-                st.warning("Please enter a valid IP address or domain name.")
+            # if not ip or not is_valid_ip_or_domain(ip):
+            #     st.warning("Please enter a valid IP address or domain name.")
                 
-            elif not project_name or not is_valid_project_name(project_name):
-                st.warning("Please enter a valid project name.")
-                st.toast("Hey, no fuzz testing this app!!!", icon="🚫")
+            # elif not project_name or not is_valid_project_name(project_name):
+            #     st.warning("Please enter a valid project name.")
+            #     st.toast("Hey, no fuzz testing this app!!!", icon="🚫")
             
-            else:
-                st.success(f"Scan initiated for `{ip}` using **{scan_mode}** mode.")
+            # else:
+            #     st.success(f"Scan initiated for `{ip}` using **{scan_mode}** mode.")
 
-                # Internal App Logic: You can now call your scan function here
-                with st.spinner("Initializing scan..."):
-                    try:
-                        scanner = Scanner(ip) # OOPs !!!    
-                        if scan_mode == "Basic":
-                            st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
-                            result = scanner.run_scan()
-                            page_code = generate_basic_template(result)
-                        elif scan_mode == "Advanced":
-                            if nmapFound:
-                                st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
-                                scanner.run_advanced_scan()
-                                page_code = generate_advanced_template(ip)
-                            else:
-                                st.warning("Nmap not found. Please install Nmap to use this feature.")
-                                st.toast("Installl all dependencies prior running this app!!!", icon="🚫")
-                                return
+            #     # Internal App Logic: You can now call your scan function here
+            #     with st.spinner("Initializing scan..."):
+            #         try:
+            #             scanner = Scanner(ip) # OOPs !!!    
+            #             if scan_mode == "Basic":
+            #                 st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
+            #                 result = scanner.run_scan()
+            #                 page_code = generate_basic_template(result)
+            #             elif scan_mode == "Advanced":
+            #                 if nmapFound:
+            #                     st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
+            #                     scanner.run_advanced_scan()
+            #                     page_code = generate_advanced_template(ip)
+            #                 else:
+            #                     st.warning("Nmap not found. Please install Nmap to use this feature.")
+            #                     st.toast("Installl all dependencies prior running this app!!!", icon="🚫")
+            #                     return
 
-                        elif scan_mode == "Web":
-                            st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
-                            host,endpoints = scanner.run_web_scan()
-                            page_code = generate_web_template(host,endpoints)
+            #             elif scan_mode == "Web":
+            #                 st.toast("Please wait 3-5 minutes for the scan to complete", icon="🔍")
+            #                 host,endpoints = scanner.run_web_scan()
+            #                 page_code = generate_web_template(host,endpoints)
                                                    
           
-                        # Save the generated page code to a new file in the PAGES_DIR
-                        sanitized_project_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", project_name.strip())
-                        page_filename = f"{sanitized_project_name}.py"
+            #             # Save the generated page code to a new file in the PAGES_DIR
+            #             sanitized_project_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", project_name.strip())
+            #             page_filename = f"{sanitized_project_name}.py"
 
-                        with open(os.path.join(PAGES_DIR, page_filename), "w", encoding="utf-8") as f:
-                            f.write(page_code)  
-                        # Display a success message
-                        st.toast(f"{scan_mode} Scan completed successfully!", icon="✅")
-                        st.success("Scan complete. Restarting app to view the new page.")
-                        time.sleep(1)
-                        st.rerun()
-                    except Exception as e:
-                        st.error(f"Scan failed: {e}")
+            #             with open(os.path.join(PAGES_DIR, page_filename), "w", encoding="utf-8") as f:
+            #                 f.write(page_code)  
+            #             # Display a success message
+            #             st.toast(f"{scan_mode} Scan completed successfully!", icon="✅")
+            #             st.success("Scan complete. Restarting app to view the new page.")
+            #             time.sleep(1)
+            #             st.rerun()
+            #         except Exception as e:
+            #             st.error(f"Scan failed: {e}")
+                st.warning("Demo version! This feature is disabled.")
+                st.toast("Please check the full version on GitHub!", icon="🔥")
 
     
     # present basic recent CVE's information

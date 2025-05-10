@@ -8,12 +8,12 @@
 
 import streamlit as st
 import modules.dashboard as app
-import modules.settings as settings
 import modules.assistant as assistant
 import modules.checksums as checksums
 import modules.analysis as analysis
 import modules.repeater as apiRepeater
 import modules.cheatsheets as cheatsheet
+import modules.Examples as examples
 
 
 def main():
@@ -25,9 +25,17 @@ def main():
     st.header("Yet Another Security Assessment Tool")
     
     with st.sidebar:
-        st.title("📁 Scan History")
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-        st.link_button("Grab the source from Github!", url="https://github.com/NONAN23x/Octaprobe")
+        st.warning("Welcome to the demo version of Octaprobe! This version is for demonstration purposes only and does not include all features or functionalities of the full version.")
+        with st.expander("Features available in the demo:"):
+            st.write("""
+            - CVE Fetching
+            - File Checksum Generation
+            - Static Binary Analysis
+            - AI Assistant
+            - Cheatsheets
+            """)
+        st.link_button("Grab the full project from Github!", url="https://github.com/NONAN23x/Octaprobe")
 
     tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
         ["**:house: Dashboard**", 
@@ -36,7 +44,7 @@ def main():
          "**:bust_in_silhouette: Assistant**",
          "**:link: APIs**",
          "**:notebook: Cheatsheets**",
-         "**:gear: Settings**",
+         "**:gear: Examples**"
          ]
         )
 
@@ -69,11 +77,12 @@ def main():
         # Cheatsheets tab content
         with st.container(border=True):
             cheatsheet.sheets()
-
+        
     with tab7:
-        # Settings tab content
+        # Examples assets
         with st.container(border=True):
-            settings.settings()
+            examples.examples()
+
 
 if __name__ == "__main__":
     # Initialize the app and run the main function

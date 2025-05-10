@@ -153,7 +153,7 @@ def sheets():
     col1, col2 = st.columns([0.9, 0.1])
 
     with col1:
-        st.write("#### Useful Checklists to aid your security assessments!")
+        st.markdown("### Useful Checklists to Aid Your Security Assessments!")
     
     with col2:
         with st.popover("💡"):

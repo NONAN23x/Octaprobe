@@ -81,7 +81,7 @@ def repeater():
     col1, col2 = st.columns([0.9, 0.1])
     
     with col1:
-        st.write("#### Test functionality of APIs by sending modified requests and inspecting responses.")
+        st.write("#### Test Functionality of APIs by sending Modified Requests and Inspecting Responses.")
     
     with col2:
         with st.popover("💡"):
@@ -112,7 +112,10 @@ def repeater():
     # Send button
     if send_request:
         if sanitize_url(url): # Check if URL is valid
-            send_api_request(url, method, headers_str, payload_str) # Send the API request
+            with st.expander("Demo version!"):
+                st.write("This feature is not available on the demo version. Please check the full version for more details.")
+                st.toast("Please check the full version on GitHub!", icon="🔥")
+                st.link_button("Grab the full project from Github!", url="https://github.com/NONAN23x/Octaprobe")
         else:
             st.error("Invalid URL. Please check the format and try again.")
     else:

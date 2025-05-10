@@ -74,6 +74,7 @@ def generate_checksums():
     
     with col1:
         st.write("#### Generate Checksums, Verify file signatures, Extract metadata.")
+        st.warning("Find runnable examples in the Examples tab!")
     
     with col2:
         with st.popover("💡"):

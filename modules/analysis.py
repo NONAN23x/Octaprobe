@@ -39,6 +39,7 @@ def analysis():
     
     with col1:
         st.write("#### Analyze PE/ELF Binaries to uncover security-relevant information.")
+        st.warning("Find runnable examples in the Examples tab!")
     
     with col2:
         with st.popover("💡"):

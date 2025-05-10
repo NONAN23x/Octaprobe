@@ -20,18 +20,6 @@ def assistant():
         st.error("Ollama (module or service) is not installed. Please install it to use this feature.")
         return
     
-    def chat_with_OctaBot(userInput: str):
-        try:
-            response: ChatResponse = chat(model='OctaBot', stream=True, messages=[
-            {
-                'role': 'user',
-                'content': userInput,
-            },
-            ])
-            for chunk in response:
-                yield chunk['message']['content']
-        except Exception as e:
-            st.error(f"Is ollama running?: {e}")
 
     # Create two columns with specified width ratio
     col1, col2 = st.columns([0.9, 0.1])
@@ -59,10 +47,20 @@ def assistant():
         with st.chat_message("user"):
             st.write(prompt)
 
-        stream = chat_with_OctaBot(prompt)
-
         with st.chat_message("assistant"):
-            # Display the response in the chat message container
+            # Provide a simple response based on the user's question
+            if "what" in prompt.lower():
+                response = "OctaProbe is a lightweight and efficient vulnerability scanner designed to identify security weaknesses in various systems. Built with Python and leveraging modern frameworks like Streamlit, it provides an intuitive interface for users to perform scans and analyze results. OctaProbe supports multiple operating systems, making it a versatile tool for developers, security analysts, and IT professionals."
+            elif "how" in prompt.lower():
+                response = "To use Octaprobe, follow the setup instructions in the README.md file on our GitHub repository."
+            elif "why" in prompt.lower():
+                response = "Octaprobe helps in identifying security vulnerabilities efficiently. Check out the GitHub repository for more details."
+            else:
+                response = "I'm here to assist with Octaprobe-related queries. Visit our GitHub repository to learn more!"
 
-            response = st.write_stream(stream)
+            # Display the response in the chat message container
+            st.write(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
+
+            # Add a link button to redirect to the GitHub repository
+            st.link_button("Visit GitHub Repository", url="https://github.com/NONAN23x/Octaprobe")
