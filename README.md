@@ -36,7 +36,7 @@ To see OctaProbe in action, click on the demo video below:
 
 <div align="center">
 
-[![Octaprobe](assets/misc/Octaprobe.png)](https://www.youtube.com/watch?v=13AFKNG8OL4){:target="_blank"}
+[![Octaprobe](assets/misc/Octaprobe.png)](https://www.youtube.com/watch?v=13AFKNG8OL4)
 
 
 </div>
