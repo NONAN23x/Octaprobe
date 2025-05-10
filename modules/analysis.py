@@ -98,7 +98,7 @@ def analysis():
         return info1, info2
     
     # File uploader for PE or ELF files
-    uploaded_file = st.file_uploader("Upload a PE or ELF binary", type=["exe", "dll", "sys", "elf"])
+    uploaded_file = st.file_uploader("Upload a PE or ELF binary")
     if uploaded_file is None:
         st.warning("Waiting for file upload...")
         return
