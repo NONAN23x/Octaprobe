@@ -6,7 +6,6 @@
 # Built as a part of Osmania University- B.E Final Year Project
 ###############################################################################
 
-markdown-pdf
 streamlit
 ollama
 hachoir
