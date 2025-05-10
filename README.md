@@ -32,13 +32,13 @@
 -- -
 ### 🎥 Demo Video
 
-To see OctaProbe in action, check out the demo video below:
+To see OctaProbe in action, click on the demo video below:
 
 <div align="center">
-    <video controls width="100%">
-        <source src="assets/misc/Octaprobe.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+
+[![Octaprobe](assets/misc/Octaprobe.png)](https://www.youtube.com/watch?v=13AFKNG8OL4)
+
+
 </div>
 
 >💡 **Test the App Online**  
