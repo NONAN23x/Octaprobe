@@ -1,8 +1,12 @@
+
+
+<div style="text-align: center; width: 100%;">
+    <img src="assets/misc/Octaprobe.png" alt="OctaProbe Logo" style="max-width: 100%; height: auto;">
+</div>
+
+<br>
 <div align=center> 
 
-# OctaProbe 🐙
-
-### Yet Another Vulnerability Scanner
 ![Static Badge](https://img.shields.io/badge/Python-Lol?style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/Streamlit-badge?style=for-the-badge&color=%236200EA)
 ![Static Badge](https://img.shields.io/badge/Ollama-badge?style=for-the-badge&color=%23212121)
@@ -22,6 +26,24 @@
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
 </div>
+
+<br><br>
+
+-- -
+### 🎥 Demo Video
+
+To see OctaProbe in action, check out the demo video below:
+
+<div align="center">
+    <video controls width="100%">
+        <source src="assets/misc/Octaprobe.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+>💡 **Test the App Online**  
+You can try out OctaProbe directly in your browser by visiting [OctaProbe](https://octaprobe.streamlit.app/).
+Note: Limited functionality on the testing version!
 
 <br><br>
 

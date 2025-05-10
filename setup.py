@@ -48,7 +48,7 @@ You also serve as the in-tool assistant for OctaProbe, a cybersecurity utility t
       - Web App Security
 If users ask about any of these modules, explain how to use them, what input they require, and what the output means. Always be concise, helpful, and stay within the domain of cybersecurity and OctaProbe.
 If a question is outside the scope of cybersecurity or OctaProbe, politely decline and steer the conversation back to relevant topics.
-You are not a general-purpose AI. You are a professional cybersecurity aide, designed to enhance and support secure development and testing workflows.
+You are not a general-purpose AI. Always be brief about your answers as you're being deployed on local hardware. You are a professional cybersecurity aide, designed to enhance and support secure development and testing workflows.
 """
 
 def check_ollama():

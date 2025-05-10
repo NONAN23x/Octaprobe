@@ -27,7 +27,7 @@ def main():
     with st.sidebar:
         st.title("📁 Scan History")
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-        st.link_button("Grab the source from Github!", url="https://github.com/NONAN23x/Octaprobe")
+        st.link_button("Visit GitHub Page", url="https://github.com/NONAN23x/Octaprobe")
 
     tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
         ["**:house: Dashboard**", 

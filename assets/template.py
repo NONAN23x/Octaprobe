@@ -27,8 +27,7 @@ st.header("Yet Another Vulnerability Scanner")
 with st.sidebar:
         st.title("📁 Scan History")
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-        st.link_button("Grab the source from Github", url="https://github.com/NONAN23x/Octaprobe")
-
+        st.link_button("Visit GitHub Page", url="https://github.com/NONAN23x/Octaprobe")
 #if ollamaNotFound:
 #        st.error("Ollama is not installed. Please install it to use this feature.")
 #        return
@@ -79,8 +78,7 @@ st.header("Yet Another Vulnerability Scanner")
 with st.sidebar:
         st.title("📁 Scan History")
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-        st.link_button("Grab the source from Github", url="https://github.com/NONAN23x/Octaprobe")
-
+        st.link_button("Visit GitHub Page", url="https://github.com/NONAN23x/Octaprobe")
 #if ollamaNotFound:
 #        st.error("Ollama is not installed. Please install it to use this feature.")
 #        return
@@ -129,7 +127,7 @@ st.header("Yet Another Vulnerability Scanner")
 with st.sidebar:
         st.title("📁 Scan History")
         st.write("Octaprobe is a security assessment tool designed to help you identify potential security issues in your IT resources. It provides a user-friendly interface for scanning and analyzing vulnerabilities.")
-        st.link_button("Grab the source from Github", url="https://github.com/NONAN23x/Octaprobe")
+        st.link_button("Visit GitHub Page", url="https://github.com/NONAN23x/Octaprobe")
 host = "{ip}"
 entries = {endpoint}
 st.write("📄 Web Scan Result")
