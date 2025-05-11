@@ -10,7 +10,6 @@
 import subprocess
 import os
 import sys
-import ollama
 import webbrowser
 
 OS = sys.platform
@@ -57,19 +56,32 @@ def check_ollama():
         print("[✔] Ollama is installed and running.")
     except Exception:
         print("[-] Ollama is not installed. Install it from https://ollama.com or follow the guide provided in Wiki.")
-        if OS == "win32":
-            print("[-] Windows users: Please install Ollama and make sure it is running.")
-            webbrowser.open_new_tab("https://ollama.com/download/windows")
-        elif OS == "linux":
-            print("[-] Linux users: Please install Ollama and make sure ollama.service is running.")
-            webbrowser.open_new_tab("https://ollama.com/download/linux")
-        elif OS == "darwin":
-            print("[-] MacOS users: Please install Ollama and make sure it is running.")
-            webbrowser.open_new_tab("https://ollama.com/download/mac")
+        try:
+            user_input = input("[?] Would you like to be taken to the download page? (y/n): ").strip().lower()
+            if user_input.startswith('y'):
+                if OS.startswith("win"):
+                    webbrowser.open("https://ollama.com/download/windows")
+                elif OS.startswith("darwin"):
+                    webbrowser.open("https://ollama.com/download/macos")
+                elif OS.startswith("linux"):
+                    webbrowser.open("https://ollama.com/download/linux")
+                else:
+                    print("[-] Unsupported OS. Please visit https://ollama.com manually.")
+            else:
+                print("You can still use the application without Ollama, but some features may be limited.")
+                print("exiting setup...")
+                sys.exit(1)
+        except KeyboardInterrupt:
+            print("\n[!] Operation interrupted by user. Exiting setup...")
+            sys.exit(1)
         sys.exit(1)
 
 def pull_base_model(BASE_MODEL=BASE_MODEL):
     try:
+        import ollama
+    except ImportError:
+        print("[-] Ollama Python package is not installed. Please install it using the command: pip install ollama")
+        sys.exit(1)
         print(f"[*] Pulling base model...")
         ollama.pull(BASE_MODEL)
         print("[✔] Base model pulled successfully.")
@@ -78,26 +90,22 @@ def pull_base_model(BASE_MODEL=BASE_MODEL):
         sys.exit(1)
 
 def build_custom_model(model_name=MODEL_NAME, base_model=BASE_MODEL, prompt=SYSTEM_PROMPT):
-    print(f"[*] Building custom model: {model_name}...")
-    ollama.create(model=model_name, system=prompt, from_=base_model)
-    print("[✔] Custom model built successfully.")
-
-def install_requirements():
     try:
-        print("[*] Installing required libraries...")
-        subprocess.run(["pip", "install", "-r", "requirements.txt"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        print("[✔] Requirements installed successfully.")
-    except KeyboardInterrupt:
-        print("\n[!] Installation interrupted by user. Exiting setup...")
+        import ollama
+        print(f"[*] Building custom model: {model_name}...")
+        ollama.create(model=model_name, system=prompt, from_=base_model)
+        print("[✔] Custom model built successfully.")
+    except ImportError:
+        print("[-] Ollama Python package is not installed. Please install it using the command: pip install ollama")
         sys.exit(1)
 
 if __name__ == "__main__":
     try:
+        os.system('clear')
         check_ollama()
         pull_base_model()
         build_custom_model()
-        install_requirements()
-        print("[✔] Setup complete. \nYou are now ready to use OctaProbe. run the following command to start the application:\n")
-        print("streamlit run app.py")
+        print("[✔] Setup finished. \nYou are now ready to use OctaProbe!\n")
+        print("To start the app, run: 'streamlit run app.py'.\nIf your environment is protected, run: 'python -m streamlit run app.py'")
     except Exception as e:
         print(f"[!] An error occurred during setup: {e}")

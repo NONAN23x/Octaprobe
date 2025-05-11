@@ -29,8 +29,7 @@
 
 <br><br>
 
--- -
-### 🎥 Demo Video
+## 🎥 Demo Video
 
 To see OctaProbe in action, click on the demo video below:
 
@@ -47,15 +46,20 @@ Note: Limited functionality on the testing version!
 
 <br><br>
 
--- -
-
-### ❓ What is it?
+## ❓ What is it?
 
 OctaProbe is a lightweight and efficient vulnerability scanner designed to identify security weaknesses in various systems. Built with Python and leveraging modern frameworks like Streamlit, it provides an intuitive interface for users to perform scans and analyze results. OctaProbe supports multiple operating systems, making it a versatile tool for developers, security analysts, and IT professionals.
 
 <br><br>
--- -
-### 🚀 How to Install?
+
+## 🚀 How to Install?
+
+> Before proceeding, ensure you have a basic understanding of the command line and that Git is installed on your system. If Git is not installed, follow the [official Git installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).  (Not to be confused with GitHub Desktop!)
+
+> 💡 **Need a tailored guide?**  
+> Refer to the [Project Wiki](https://github.com/NONAN23x/Octaprobe/wiki) for detailed, platform-specific instructions.
+
+<br>
 
 1. Clone the repository:
     ```bash
@@ -63,27 +67,34 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
     cd Octaprobe
     ```
 
-2. Run the provided setup script:
-    ```bash
-    python setup.py
+2. Install `uv` package manager:
+    
+    For Windows:
+    ```powershell
+    pip install uv
     ```
-
-3. Follow the instructions laid out by the above script:  
-    > The script ensures that all required libraries are installed and that the Ollama service is properly set up. The setup script will automatically check for Ollama's installation and configuration. If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance. Please ensure the service is active and accessible to avoid any runtime issues.
-
-
-4. Run the application:  
+    For Linux distros with pipx:
     ```bash
-    streamlit run app.py
+    pipx install uv
     ```
-
     > 💡 **Note**  
      For detailed installation instructions for specific operating systems, please refer to the [Project Wiki](https://github.com/NONAN23x/Octaprobe/wiki)! We're excited to help you get started!
 
-<br><br>
--- -
+    - (Optional) Run setup.py with uv to initialize local llm:
+        ```bash
+        uv run setup.py
+        ```
+        > ⚠️ The script ensures that all required libraries are installed and that the Ollama service is properly set up. The setup script will automatically check for Ollama's installation and configuration. If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance. Please ensure the service is active and accessible to avoid any runtime issues.
 
-### 🤝 Contributing
+
+3. Run the application:  
+    ```bash
+    uv run streamlit run app.py
+    ```
+
+<br><br>
+
+## 🤝 Contributing
 > We welcome contributions from the community! Before you begin, please take a moment to read the [CONTRIBUTING.md](https://github.com/NONAN23x/Octaprobe/blob/main/CONTRIBUTING.md) and [ROADMAP.md](https://github.com/NONAN23x/Octaprobe/blob/main/ROADMAP.md) files in the repository to understand the project's guidelines and future plans.
 
 After you've read the above documents, here's how you can contribute:
