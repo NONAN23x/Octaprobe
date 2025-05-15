@@ -20,7 +20,7 @@ try :
     ollamaNotFound = False
 except ImportError:
     ollamaNotFound = True
-st.set_page_config("Octaprobe", page_icon=":octopus:")
+st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
 
@@ -71,9 +71,10 @@ try :
     ollamaNotFound = False
 except ImportError:
     ollamaNotFound = True
-st.set_page_config("Octaprobe", page_icon=":octopus:")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
+
+st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 
 with st.sidebar:
         st.title("📁 Scan History")
@@ -120,7 +121,7 @@ def generate_web_template(ip: str, endpoint) -> str:
 import pandas as pd
 import subprocess
 import requests
-st.set_page_config("Octaprobe", page_icon=":octopus:")
+st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
 

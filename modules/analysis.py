@@ -9,6 +9,7 @@
 import streamlit as st
 import os
 import math
+import assets.virustotal_fetch as vt
 
 try:
     import pefile
@@ -18,7 +19,7 @@ except ImportError:
     libraryNotFound = True
 
 def analysis():
-    
+
     def calculate_entropy(data):
         if not data:
             return 0.0
@@ -135,3 +136,58 @@ def analysis():
         except Exception as e:
             st.error(f"An error occurred during analysis: {e}")
     
+def virus_analysis():
+
+    api_key = os.getenv("VIRUSTOTAL_API_KEY")
+    if not api_key:
+        st.write("VirusTotal API key not found. Please set the 'VIRUSTOTAL_API_KEY' environment variable.")
+        st.info("Visit https://www.virustotal.com/gui/my-apikeys for more information.")
+        return
+    
+    def send_to_virustotal(file_path):
+        result, chart, hashes, timetaken = vt.virustotal_analysis(file_path)
+        st.write(result)
+        if result:
+            cols1, cols2, cols3 = st.columns(3, border=True)
+            with cols1:
+                st.write("SHA256 Hash:")
+                st.code(hashes.get("sha256"))
+            with cols2:
+                st.write("MD5 Hash:")
+                st.code(hashes.get("md5"))
+            with cols3:
+                st.write("sha1 Hash:")
+                st.code(hashes.get("sha1"))
+            st.bar_chart(chart)
+            col6, col7 = st.columns([0.8, 0.2])
+            col6.success(f"VirusTotal analysis completed successfully ({timetaken:.2f})")
+            if col7.button("Refresh"):
+                st.rerun()
+        else:
+            st.error("VirusTotal analysis failed.")
+    
+        # Create two columns for layout
+    col1, col2 = st.columns([0.9, 0.1])
+    
+    with col1:
+        st.write("#### Detect malware using VirusTotal API.")
+    
+    with col2:
+        with st.popover("💡"):
+            st.write("You can upload a file for analysis.")
+            st.write("If the results came out as queue, please wait for a while and refresh the page.")
+            st.info("Note: Virustotal uses more than 50 antivirus engine to perform analysis on the file, so it may take very longer processing times, it is adviced to wait atleast 30 seconds before refreshing. As the tool timeouts after 30 seconds by itself.")
+            st.warning("Remember to hit x on the uploaded file to remove it after analysis, before proceeding to next features.")
+    
+    # File uploader for PE or ELF files
+    uploaded_file = st.file_uploader("Upload a file", key="vt_file")
+
+    if uploaded_file is None:
+        st.warning("Waiting for file upload...")
+        return
+    elif uploaded_file:
+        temp_file_path = os.path.join(os.getcwd(), "assets", "data", uploaded_file.name)
+        with open(temp_file_path, "wb") as temp_file:
+            temp_file.write(uploaded_file.read())
+            with st.spinner("Performing VirusTotal analysis..."):
+                send_to_virustotal(temp_file_path)

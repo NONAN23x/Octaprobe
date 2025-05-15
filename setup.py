@@ -50,6 +50,22 @@ If a question is outside the scope of cybersecurity or OctaProbe, politely decli
 You are not a general-purpose AI. Always be brief about your answers as you're being deployed on local hardware. You are a professional cybersecurity aide, designed to enhance and support secure development and testing workflows.
 """
 
+def check_virus_total():
+    api_key = os.environ.get("VIRUSTOTAL_API_KEY")
+    if api_key:
+        print("[✔] VIRUSTOTAL_API_KEY is set.")
+    else:
+        print("[-] VIRUSTOTAL_API_KEY environment variable is not set.")
+        print("This API key is required for using VirusTotal features in OctaProbe.")
+        try:
+            user_input = input("[?] Would you like to be redirected to the VirusTotal API key page? (y/n): ").strip().lower()
+            if user_input.startswith('y'):
+                webbrowser.open("https://www.virustotal.com/gui/my-apikeys")
+            else:
+                print("You can still use the application, but VirusTotal features will be unavailable.")
+        except KeyboardInterrupt:
+            print("\n[!] Operation interrupted by user.")
+
 def check_ollama():
     try:
         subprocess.run(["ollama", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -102,6 +118,7 @@ def build_custom_model(model_name=MODEL_NAME, base_model=BASE_MODEL, prompt=SYST
 if __name__ == "__main__":
     try:
         os.system('clear')
+        check_virus_total()
         check_ollama()
         pull_base_model()
         build_custom_model()

@@ -86,6 +86,20 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
         ```
         > ⚠️ The script ensures that all required libraries are installed and that the Ollama service is properly set up. The setup script will automatically check for Ollama's installation and configuration. If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance. Please ensure the service is active and accessible to avoid any runtime issues.
 
+    - (Optional) Run setup.py with uv to initialize VirusTotal API:
+        ```bash 
+        uv run setup.py
+        ```
+        > ⚠️ The setup.py ensures that you have Virustotal API key installed and accessible, if not found; setup redirects you to webpage where you can sign up using google chrome and get your API key, you can have to add this to your OS Environment Variable
+
+        - For Windows
+        Go to Search Bar > Environment Variables > Add new variable `VIRUSTOTAL_API_KEY`
+        - For Linux
+        Open up a terminal, add the following to your .bashrc or .zshrc
+            ```bash 
+            export VIRUSTOTAL_API_KEY="Your API Key Here"
+            ```
+
 
 3. Run the application:  
     ```bash
