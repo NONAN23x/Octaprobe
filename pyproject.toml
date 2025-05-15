@@ -1,0 +1,15 @@
+[project]
+name = "octaprobe"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "hachoir>=3.3.0",
+    "ollama>=0.4.8",
+    "pefile>=2024.8.26",
+    "pyelftools>=0.32",
+    "pyexiftool>=0.5.6",
+    "requests>=2.32.3",
+    "streamlit>=1.45.0",
+]
