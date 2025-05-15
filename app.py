@@ -41,9 +41,9 @@ def main():
         ["**:house: Dashboard**", 
          "**:key: Checksums**",
          "**:microscope: Malware Analysis**",
-         "**:bust_in_silhouette: Assistant**",
          "**:link: APIs**",
          "**:notebook: Cheatsheets**",
+         "**:bust_in_silhouette: Assistant**",
          "**:gear: Examples**"
          ]
         )
@@ -62,21 +62,24 @@ def main():
         # Malware Analysis tab content
         with st.container(border=True):
             analysis.analysis()
-
+        # VirusTotal Analysis
+        with st.expander("VirusTotal Analysis"):
+            analysis.virus_analysis()
+        
     with tab4:
-        # Assistant tab content
-        with st.container(border=True):
-            assistant.assistant()
-
-    with tab5:
         # API tab content
         with st.container(border=True):
             apiRepeater.repeater()
 
-    with tab6:
+    with tab5:
         # Cheatsheets tab content
         with st.container(border=True):
             cheatsheet.sheets()
+
+    with tab6:
+        # Assistant tab content
+        with st.container(border=True):
+            assistant.assistant()
         
     with tab7:
         # Examples assets

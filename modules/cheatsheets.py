@@ -38,6 +38,8 @@ def sheets():
         progress = completed / total
         st.progress(progress)
         st.success(f"✅ {completed} of {total} tasks completed ({int(progress * 100)}%)")
+        if completed == total:
+            st.balloons()
 
     def windows_hardening_cheatsheet():
         checklist = {
@@ -74,6 +76,8 @@ def sheets():
         progress = completed / total
         st.progress(progress)
         st.success(f"✅ {completed} of {total} tasks completed ({int(progress * 100)}%)")
+        if completed == total:
+            st.balloons()
 
     def black_box_enumeration_cheatsheet():
         checklist = {
@@ -111,6 +115,8 @@ def sheets():
         progress = completed / total
         st.progress(progress)
         st.success(f"✅ {completed} of {total} tasks completed ({int(progress * 100)}%)")
+        if completed == total:
+            st.balloons()
 
     def webapp_security_cheatsheet():
         checklist = {
@@ -148,12 +154,14 @@ def sheets():
         progress = completed / total
         st.progress(progress)
         st.success(f"✅ {completed} of {total} tasks completed ({int(progress * 100)}%)")
+        if completed == total:
+            st.balloons()
 
     # Create two columns for layout
     col1, col2 = st.columns([0.9, 0.1])
 
     with col1:
-        st.markdown("### Useful Checklists to Aid Your Security Assessments!")
+        st.write("#### Useful Checklists to aid your security assessments!")
     
     with col2:
         with st.popover("💡"):

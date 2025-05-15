@@ -91,6 +91,11 @@ def generate_checksums():
         st.warning("Waiting for file upload...")
         return
     
+    # check if users are uploading executable files
+    if not (uploaded_file.type.startswith("image/") or uploaded_file.type.startswith("text/")):
+        st.error("Unsupported file type. Please upload an image or text file.")
+        return
+    
     # Printing Metadata first
     with st.expander("File Details"):
         file_details = metadata(uploaded_file)
