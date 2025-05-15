@@ -61,25 +61,26 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
 
 <br>
 
-1. Clone the repository:
+1. Install `uv` package manager:
+    
+    - Windows:
+        ```powershell
+        powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+        ```
+    - Linux:
+        ```bash
+        wget -qO- https://astral.sh/uv/install.sh | sh
+        ```
+
+    > ⚠️ Note: Restart your terminal emulator so that uv is reflected on your PATH
+
+<br>
+
+2. Clone the repository:
     ```bash
     git clone https://github.com/NONAN23x/Octaprobe.git
     cd Octaprobe
     ```
-
-2. Install `uv` package manager:
-    
-    For Windows:
-    ```powershell
-    pip install uv
-    ```
-    For Linux distros with pipx:
-    ```bash
-    pipx install uv
-    ```
-    > 💡 **Note**  
-     For detailed installation instructions for specific operating systems, please refer to the [Project Wiki](https://github.com/NONAN23x/Octaprobe/wiki)! We're excited to help you get started!
-
     - (Optional) Run setup.py with uv to initialize local llm:
         ```bash
         uv run setup.py
