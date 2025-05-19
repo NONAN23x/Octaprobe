@@ -24,6 +24,8 @@
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Android-Android?style=for-the-badge&logo=Android&color=Green)
+
 
 </div>
 
@@ -72,25 +74,33 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
         wget -qO- https://astral.sh/uv/install.sh | sh
         ```
 
-    > ⚠️ Note: Restart your terminal emulator so that uv is reflected on your PATH
+<br>
+
+> ⚠️ Note: Restart your terminal emulator so that uv is reflected on your PATH
 
 <br>
 
 2. Clone the repository:
     ```bash
     git clone https://github.com/NONAN23x/Octaprobe.git
+    ```
+3. Navigate inside the repository and run uv to sync dependencies (Only if this is your first time running this app!):
+    ```bash
     cd Octaprobe
     ```
-    - (Optional) Run setup.py with uv to initialize local llm:
+    ```bash
+    uv sync
+    ```
+    Uv Sync is just gonna take 1-2 minutes on average, so please be patient
+    
+    <br>
+
+    -  (Optional) Run setup.py with uv to initialize local llm:
         ```bash
         uv run setup.py
         ```
         > ⚠️ The script ensures that all required libraries are installed and that the Ollama service is properly set up. The setup script will automatically check for Ollama's installation and configuration. If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance. Please ensure the service is active and accessible to avoid any runtime issues.
 
-    - (Optional) Run setup.py with uv to initialize VirusTotal API:
-        ```bash 
-        uv run setup.py
-        ```
         > ⚠️ The setup.py ensures that you have Virustotal API key installed and accessible, if not found; setup redirects you to webpage where you can sign up using google chrome and get your API key, you can have to add this to your OS Environment Variable
 
         - For Windows
@@ -101,46 +111,16 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
             export VIRUSTOTAL_API_KEY="Your API Key Here"
             ```
 
+<br>
 
 3. Run the application:  
     ```bash
     uv run streamlit run app.py
     ```
-
+    - When running this for the first time, streamlit asks for your email, if you don't wish to provide it, simply leave it blank and hit enter :)
 <br><br>
 
 ## 🤝 Contributing
 > We welcome contributions from the community! Before you begin, please take a moment to read the [CONTRIBUTING.md](https://github.com/NONAN23x/Octaprobe/blob/main/CONTRIBUTING.md) and [ROADMAP.md](https://github.com/NONAN23x/Octaprobe/blob/main/ROADMAP.md) files in the repository to understand the project's guidelines and future plans.
 
-After you've read the above documents, here's how you can contribute:
-
-1. **Fork the Repository**:  
-    Click the "Fork" button at the top-right corner of this repository to create your own copy.
-
-2. **Clone Your Fork**:  
-    ```bash
-    git clone https://github.com/your-username/Octaprobe.git
-    cd Octaprobe
-    ```
-
-3. **Create a Branch**:  
-    Create a new branch for your feature or bug fix.  
-    ```bash
-    git checkout -b feature-name
-    ```
-
-4. **Make Changes**:  
-    Implement your changes and commit them with a descriptive message.  
-    ```bash
-    git add .
-    git commit -m "Add a brief description of your changes"
-    ```
-
-5. **Push Changes**:  
-    Push your changes to your forked repository.  
-    ```bash
-    git push origin feature-name
-    ```
-
-6. **Submit a Pull Request**:  
-    Open a pull request to the main repository. Provide a clear description of your changes and why they should be merged.
+> **Note:** While I appreciate your interest in contributing, we are unable to accept new feature contributions until July due to ongoing college evaluations. However, you are encouraged to report bugs and open issues in the meantime!

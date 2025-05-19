@@ -156,6 +156,7 @@ include
 etc
 share
 pages/*
+!pages/.deleteme
 assets/webapp_test.py
 pyvenv.cfg
 assets/data/octaprobe.db

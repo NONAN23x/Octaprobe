@@ -98,15 +98,13 @@ class Scanner:
         cache_dir = os.path.join(os.getcwd(), ".cache")
         os.makedirs(cache_dir, exist_ok=True)
         output_file = os.path.join(cache_dir, f"{self.ip}_advanced.gnmap")
-        cmd = ["nmap", "-T5", "-sV", "-F", "-oG", output_file, self.ip]
-        subprocess.run(cmd, stderr=subprocess.STDOUT, text=True, timeout=300)
+        cmd = ["nmap", "-T5", "-sV", "-oG", output_file, self.ip]
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, text=True, timeout=300)
     
     def run_web_scan(self, wordlist_path: str = None) -> None:
-        print("Starting web scan...")
         url_base = f"http://{self.ip}/"
         headers = {"User-Agent": "Mozilla/5.0"}
         discovered_endpoints = [] 
-        print("Engine Breakpoint 0")
         if wordlist_path is None:
             wordlist_path = os.path.join(os.path.dirname(__file__), "wordlists", "wordlist.txt")
 

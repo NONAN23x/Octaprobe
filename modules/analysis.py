@@ -190,4 +190,7 @@ def virus_analysis():
         with open(temp_file_path, "wb") as temp_file:
             temp_file.write(uploaded_file.read())
             with st.spinner("Performing VirusTotal analysis..."):
-                send_to_virustotal(temp_file_path)
+                try:
+                    send_to_virustotal(temp_file_path)
+                except Exception as e:
+                    st.write(f"Error during VirusTotal analysis: {e}")

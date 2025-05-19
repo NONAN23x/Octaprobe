@@ -71,10 +71,10 @@ try :
     ollamaNotFound = False
 except ImportError:
     ollamaNotFound = True
+st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 st.title("Octaprobe")
 st.header("Yet Another Vulnerability Scanner")
 
-st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 
 with st.sidebar:
         st.title("📁 Scan History")
@@ -87,7 +87,7 @@ with st.sidebar:
 st.divider()
 st.subheader("Target: {ip}")
 st.write("📄 Advanced Scan Result")
-cache_file = os.path.join(os.getcwd(), ".cache", "localhost_advanced.gnmap")
+cache_file = os.path.join(os.getcwd(), ".cache", "{ip}_advanced.gnmap")
 if os.path.exists(cache_file):
     with open(cache_file, "r") as file:
         local_data = file.read()
@@ -111,7 +111,7 @@ if os.path.exists(cache_file):
         st.warning("Check the IP Address, are you sure the host is running?")
 
 else:
-    st.error(f"No scan data found for localhost in cache")
+    st.error(f"No scan data found for {ip} in cache")
     localData = []
 
 """

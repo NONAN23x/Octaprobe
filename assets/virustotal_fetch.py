@@ -32,9 +32,8 @@ def virustotal_analysis(file_path):
                     if status == "completed":
                         break
                     if time.time() - start_time > 30:
-                        print("Analysis timed out after 30 seconds.")
+                        print("Virustotal Analysis timed out after 30 seconds.")
                         break
-                    print(f"Analysis status: {status}. Waiting for completion...")
                     time.sleep(5)  # Wait for 5 seconds
                 elapsed_time = (time.time() - start_time)
                 analysis_response = requests.get(analysis_url, headers=headers)

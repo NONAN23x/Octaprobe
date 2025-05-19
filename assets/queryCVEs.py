@@ -40,7 +40,7 @@ def fetch_cves():
     # Fetch new data if cache is invalid or expired
     endpoint = "https://cvedb.shodan.io/cves"
     params = {
-        "limit": 4
+        "limit": 6
     }
 
     response = requests.get(endpoint, params=params)
