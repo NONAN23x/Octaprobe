@@ -1,0 +1,50 @@
+[
+  {
+    "port": 21,
+    "banner": "220 (vsFTPd 2.3.4)"
+  },
+  {
+    "port": 22,
+    "banner": "SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1"
+  },
+  {
+    "port": 23,
+    "banner": "\u0018 #'"
+  },
+  {
+    "port": 25,
+    "banner": "220 metasploitable.localdomain ESMTP Postfix (Ubuntu)"
+  },
+  {
+    "port": 53,
+    "banner": "Couldn't Identify Banner"
+  },
+  {
+    "port": 80,
+    "banner": "Couldn't Identify Banner"
+  },
+  {
+    "port": 111,
+    "banner": "Couldn't Identify Banner"
+  },
+  {
+    "port": 139,
+    "banner": "Couldn't Identify Banner"
+  },
+  {
+    "port": 445,
+    "banner": "Couldn't Identify Banner"
+  },
+  {
+    "port": 512,
+    "banner": "\u0001Where are you?"
+  },
+  {
+    "port": 513,
+    "banner": "Couldn't Identify Banner"
+  },
+  {
+    "port": 514,
+    "banner": "Couldn't Identify Banner"
+  }
+]

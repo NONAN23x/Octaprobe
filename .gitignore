@@ -155,7 +155,6 @@ lib64
 include
 etc
 share
-pages
 assets/webapp_test.py
 pyvenv.cfg
 assets/data/octaprobe.db
@@ -245,7 +244,6 @@ _pkginfo.txt
 
 # Visual Studio cache files
 # files ending in .cache can be ignored
-*.[Cc]ache
 # but keep track of directories ending in .cache
 !?*.[Cc]ache/
 
