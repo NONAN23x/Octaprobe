@@ -22,7 +22,7 @@ except ImportError:
     ollamaNotFound = True
 st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 st.title("Octaprobe")
-st.header("Yet Another Vulnerability Scanner")
+st.header("Yet Another Security Assessment Tool")
 
 with st.sidebar:
         st.title("📁 Scan History")
@@ -73,7 +73,7 @@ except ImportError:
     ollamaNotFound = True
 st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 st.title("Octaprobe")
-st.header("Yet Another Vulnerability Scanner")
+st.header("Yet Another Security Assessment Tool")
 
 
 with st.sidebar:
@@ -123,7 +123,7 @@ import subprocess
 import requests
 st.set_page_config("Octaprobe", page_icon=":octopus:", layout="wide")
 st.title("Octaprobe")
-st.header("Yet Another Vulnerability Scanner")
+st.header("Yet Another Security Assessment Tool")
 
 with st.sidebar:
         st.title("📁 Scan History")
