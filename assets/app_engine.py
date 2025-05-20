@@ -108,19 +108,24 @@ class Scanner:
         if wordlist_path is None:
             wordlist_path = os.path.join(os.path.dirname(__file__), "wordlists", "wordlist.txt")
 
+        def check_endpoint(path):
+            path = path.strip()
+            if not path:
+                return None
+            target = url_base + path
+            try:
+                response = requests.get(target, headers=headers, timeout=3)
+                if response.status_code == 200:
+                    return path
+            except requests.RequestException:
+                return None
+
         try:
             with open(wordlist_path, "r") as f:
-                for line in f:
-                    path = line.strip()
-                    if not path:
-                        continue
-                    target = url_base + path
-                    try:
-                        response = requests.get(target, headers=headers, timeout=3)
-                        if response.status_code == 200:
-                            discovered_endpoints.append(path)
-                    except requests.RequestException:
-                        pass
+                paths = [line.strip() for line in f if line.strip()]
+                with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+                    results = list(executor.map(check_endpoint, paths))
+                    discovered_endpoints.extend([r for r in results if r])
         except FileNotFoundError:
             print(f"Wordlist file not found: {wordlist_path}")
         

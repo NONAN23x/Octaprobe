@@ -31,9 +31,9 @@
 
 <br><br>
 
-## 🎥 Demo Video
+## 🎥 Presentation
 
-To see OctaProbe in action, click on the demo video below:
+Look at the cinematic trailor I made for this project!
 
 <div align="center">
 
@@ -43,7 +43,7 @@ To see OctaProbe in action, click on the demo video below:
 </div>
 
 >💡 **Test the App Online**  
-You can try out OctaProbe directly in your browser by visiting [OctaProbe](https://octaprobe.streamlit.app/).
+You can try out OctaProbe directly in your browser by visiting [octaprobe.streamlit.app](https://octaprobe.streamlit.app/)
 Note: Limited functionality on the testing version!
 
 <br><br>
@@ -57,9 +57,6 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
 ## 🚀 How to Install?
 
 > Before proceeding, ensure you have a basic understanding of the command line and that Git is installed on your system. If Git is not installed, follow the [official Git installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).  (Not to be confused with GitHub Desktop!)
-
-> 💡 **Need a tailored guide?**  
-> Refer to the [Project Wiki](https://github.com/NONAN23x/Octaprobe/wiki) for detailed, platform-specific instructions.
 
 <br>
 
@@ -99,10 +96,11 @@ OctaProbe is a lightweight and efficient vulnerability scanner designed to ident
         ```bash
         uv run setup.py
         ```
-        > ⚠️ The script ensures that all required libraries are installed and that the Ollama service is properly set up. The setup script will automatically check for Ollama's installation and configuration. If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance. Please ensure the service is active and accessible to avoid any runtime issues.
+        > ⚠️ This helper script is responsible for making sure you have properly installed and setup Ollama and Virus Total API
+        > - If Ollama is not installed or configured, the script will redirect you to the [Ollama Documentation](https://ollama.com/) for guidance.  
+        > - If a VirusTotal API key is missing, you will be prompted to provide one during setup.
 
-        > ⚠️ The setup.py ensures that you have Virustotal API key installed and accessible, if not found; setup redirects you to webpage where you can sign up using google chrome and get your API key, you can have to add this to your OS Environment Variable
-
+        To set VirusTotalAPI Key:
         - For Windows
         Go to Search Bar > Environment Variables > Add new variable `VIRUSTOTAL_API_KEY`
         - For Linux
